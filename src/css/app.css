@@ -119,3 +119,45 @@
         @apply border-2 border-warm-ivory/30 text-warm-ivory hover:bg-warm-ivory/10 hover:border-warm-ivory/60;
     }
 }
+
+/* انیمیشن شناور بودن (Floating) */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@layer components {
+
+    /* استایل پایه کارت آماری */
+    .stat-card {
+        @apply relative bg-white rounded-2xl shadow-xl p-4 flex items-center gap-4 border border-soft-stone/50 z-30 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+    }
+
+    /* زائده کارت (شبیه به حباب گفتگو) */
+    .stat-card::before {
+        content: '';
+        @apply absolute top-1/2 -translate-y-1/2 -right-2 w-4 h-4 bg-white rotate-45 border-t border-r border-soft-stone/50;
+    }
+
+    /* انیمیشن‌های اختصاصی */
+    .animate-float-1 {
+        animation: float 4s ease-in-out infinite;
+    }
+
+    .animate-float-2 {
+        animation: float 4s ease-in-out 1.5s infinite;
+    }
+
+    .animate-float-3 {
+        animation: float 4s ease-in-out 3s infinite;
+    }
+}

@@ -16,7 +16,7 @@ get_header();
 <!-- =========================================
      Hero Section
      ========================================= -->
-<section class="relative bg-deep-emerald text-warm-ivory pt-32 pb-48 lg:pt-40 lg:pb-56 rounded-t-[3rem] mx-2 md:mx-4 -mt-4 overflow-hidden shadow-2xl z-10">
+<section class="relative bg-deep-emerald text-warm-ivory pt-16 pb-48 lg:pt-22 lg:pb-56 rounded-t-[2.5rem] mx-4 md:mx-8 mt-4 overflow-hidden shadow-2xl z-10">
 
     <!-- پس‌زمینه تزئینی (پترن‌های صلیب) -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden select-none">
@@ -49,13 +49,12 @@ get_header();
             <div class="text-center lg:text-start mt-8 lg:mt-0">
                 <!-- تیتر اصلی -->
                 <h1 class="text-4xl md:text-5xl lg:text-hero font-black font-peyda leading-tight mb-6">
-                    نوبت دکتر رو <br class="hidden lg:block">
-                    <span class="text-champagne-gold">سریع و مطمئن</span> بگیر
+                    با <span class="text-champagne-gold">سرو</span> لبخندت رو زیبا کن
                 </h1>
 
                 <!-- زیرتیتر -->
                 <p class="text-body-range text-warm-ivory/80 font-peyda leading-relaxed mb-10 max-w-xl mx-auto lg:mx-0">
-                    با چند کلیک ساده و سریع، پزشک معتبر پیدا کن، نوبت رزرو کن و از خدمات پزشکی مطمئن و حرفه‌ای در هر زمان و هر مکان استفاده کن.
+                    در کلینیک سرو، ما لبخند شما را می‌سازیم! سال‌هاست چهره‌های شناخته‌شده، از فوتبالیست‌ها تا بازیگران، به ما اعتماد دارند. شما هم همین امروز وقت رزرو کنید و تجربه‌ای متفاوت داشته باشید.
                 </p>
 
                 <!-- دکمه‌ها (استفاده از کلاس‌های کامپوننت) -->
@@ -72,29 +71,143 @@ get_header();
                 </div>
             </div>
 
-            <!-- ستون تصویر و کارت‌ها (در گام ۲ تکمیل می‌شود) -->
-            <div class="relative h-[400px] lg:h-[600px] w-full flex justify-center items-end">
-                <!-- این بخش در گام ۲ تکمیل خواهد شد -->
-                <div class="text-warm-ivory/20 font-satoshi text-xl border-2 border-dashed border-warm-ivory/20 rounded-xl p-8 w-full h-full flex items-center justify-center">
-                    محل قرارگیری تصویر پزشک و کارت‌های شناور (گام ۲)
+            <!-- ستون تصویر و کارت‌های شناور -->
+            <div class="relative w-full flex justify-center items-end lg:mt-0 lg:flex-row flex-col">
+
+                <!-- تصویر پزشکان -->
+                <div class="relative w-full max-w-md lg:max-w-full z-20 flex justify-center lg:justify-end">
+                    <!-- 
+                        کاربر تصویر PNG خود را در مسیر قالب قرار می‌دهد.
+                        فعلاً از یک تصویر Placeholder استفاده می‌کنیم تا ساختار مشخص باشد.
+                    -->
+                    <img
+                        src="<?php echo esc_url(get_template_directory_uri() . '/src/images/doctors.png'); ?>"
+                        alt="تیم پزشکان سرو"
+                        class="w-full h-auto object-contain object-bottom drop-shadow-2xl"
+                        onerror="this.src='https://placehold.co/600x600/transparent/0E3B32?text=Doctors+Image';">
                 </div>
+
+                <!-- کانتینر کارت‌های آماری -->
+                <!-- در دسکتاپ absolute هستند، در موبایل به گرید تبدیل می‌شوند -->
+                <div class="absolute top-0 -left-30 w-full h-full pointer-events-none hidden lg:block z-30">
+
+                    <!-- کارت اول -->
+                    <div class="absolute top-[10%] end-0 xl:end-10 pointer-events-auto animate-float-1">
+                        <div class="stat-card">
+                            <div class="w-12 h-12 rounded-full bg-warm-ivory flex items-center justify-center text-deep-emerald shrink-0">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col text-start">
+                                <span class="text-h3 font-bold text-deep-emerald font-satoshi leading-none mb-1" dir="ltr">
+                                    <?php echo esc_html(get_theme_mod('sarv_stat_1_number', '+۳۵۰')); ?>
+                                </span>
+                                <span class="text-caption text-charcoal/70 font-peyda">
+                                    <?php echo esc_html(get_theme_mod('sarv_stat_1_label', 'پزشک فعال')); ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- کارت دوم -->
+                    <div class="absolute top-[40%] end-4 xl:end-16 pointer-events-auto animate-float-2">
+                        <div class="stat-card">
+                            <div class="w-12 h-12 rounded-full bg-warm-ivory flex items-center justify-center text-champagne-gold shrink-0">
+                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col text-start">
+                                <span class="text-h3 font-bold text-deep-emerald font-satoshi leading-none mb-1" dir="ltr">
+                                    <?php echo esc_html(get_theme_mod('sarv_stat_2_number', '۹۸%')); ?>
+                                </span>
+                                <span class="text-caption text-charcoal/70 font-peyda">
+                                    <?php echo esc_html(get_theme_mod('sarv_stat_2_label', 'رضایت کاربران')); ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- کارت سوم -->
+                    <div class="absolute top-[70%] end-0 xl:end-8 pointer-events-auto animate-float-3">
+                        <div class="stat-card">
+                            <div class="w-12 h-12 rounded-full bg-warm-ivory flex items-center justify-center text-deep-emerald shrink-0">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <div class="flex flex-col text-start">
+                                <span class="text-h3 font-bold text-deep-emerald font-satoshi leading-none mb-1" dir="ltr">
+                                    <?php echo esc_html(get_theme_mod('sarv_stat_3_number', '+100K')); ?>
+                                </span>
+                                <span class="text-caption text-charcoal/70 font-peyda">
+                                    <?php echo esc_html(get_theme_mod('sarv_stat_3_label', 'نوبت رزرو شده')); ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- کارت‌های موبایل (در صفحه‌های کوچک به صورت گرید در زیر تصویر نمایش داده می‌شوند) -->
+                <div class="hidden lg:hidden w-full grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- کارت اول موبایل -->
+                    <div class="bg-white rounded-brand shadow-md p-4 flex items-center gap-3 border border-soft-stone/50">
+                        <div class="w-10 h-10 rounded-full bg-warm-ivory flex items-center justify-center text-deep-emerald shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col text-start">
+                            <span class="text-body font-bold text-deep-emerald font-satoshi leading-none mb-1" dir="ltr"><?php echo esc_html(get_theme_mod('sarv_stat_1_number', '+۳۵۰')); ?></span>
+                            <span class="text-caption text-charcoal/70 font-peyda"><?php echo esc_html(get_theme_mod('sarv_stat_1_label', 'پزشک فعال')); ?></span>
+                        </div>
+                    </div>
+                    <!-- کارت دوم موبایل -->
+                    <div class="bg-white rounded-brand shadow-md p-4 flex items-center gap-3 border border-soft-stone/50">
+                        <div class="w-10 h-10 rounded-full bg-warm-ivory flex items-center justify-center text-champagne-gold shrink-0">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col text-start">
+                            <span class="text-body font-bold text-deep-emerald font-satoshi leading-none mb-1" dir="ltr"><?php echo esc_html(get_theme_mod('sarv_stat_2_number', '۹۸%')); ?></span>
+                            <span class="text-caption text-charcoal/70 font-peyda"><?php echo esc_html(get_theme_mod('sarv_stat_2_label', 'رضایت کاربران')); ?></span>
+                        </div>
+                    </div>
+                    <!-- کارت سوم موبایل -->
+                    <div class="bg-white rounded-brand shadow-md p-4 flex items-center gap-3 border border-soft-stone/50">
+                        <div class="w-10 h-10 rounded-full bg-warm-ivory flex items-center justify-center text-deep-emerald shrink-0">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="flex flex-col text-start">
+                            <span class="text-body font-bold text-deep-emerald font-satoshi leading-none mb-1" dir="ltr"><?php echo esc_html(get_theme_mod('sarv_stat_3_number', '+100K')); ?></span>
+                            <span class="text-caption text-charcoal/70 font-peyda"><?php echo esc_html(get_theme_mod('sarv_stat_3_label', 'نوبت رزرو شده')); ?></span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </div>
-
-    <!-- المان اسکرول به پایین (دکمه وسط) -->
-    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-30">
-        <a href="#features" class="w-12 h-12 bg-deep-emerald border-4 border-warm-ivory rounded-full flex items-center justify-center shadow-lg text-champagne-gold hover:bg-champagne-gold hover:text-deep-emerald transition-colors duration-300 group" aria-label="اسکرول به پایین">
-            <svg class="w-6 h-6 transform group-hover:translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
-        </a>
-    </div>
 </section>
 
-<!-- فاصله برای نوار شناور پایینی -->
-<div id="features" class="h-24 bg-warm-ivory"></div>
+<?php
+// فراخوانی کامپوننت نوار شناور پایینی
+get_template_part('template-parts/hero/features');
+?>
+
+<!-- بخش تستی بعدی (برای تست اسکرول) -->
+<section id="next-section" class="py-24 bg-warm-ivory">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+        <h2 class="text-h2 font-bold text-deep-emerald mb-4 font-peyda">بخش جستجوی پزشک</h2>
+        <p class="text-body text-charcoal/70 font-peyda">این بخش در مراحل بعدی توسعه خواهد یافت.</p>
+    </div>
+</section>
 
 <?php
 get_footer();

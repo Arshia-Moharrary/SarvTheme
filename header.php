@@ -89,11 +89,7 @@ if (! defined('ABSPATH')) {
                         <div class="absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2 z-50">
                             <a href="<?php echo esc_url(home_url('/')); ?>" class="block w-20 h-20 md:w-28 md:h-28 rounded-full bg-white shadow-xl border-[6px] border-warm-ivory overflow-hidden flex items-center justify-center transition-transform duration-300 hover:scale-105 group">
 
-                                <!-- در اینجا کاربر تصویر لوگوی خود را با نسبت ۱:۱ قرار می‌دهد -->
-                                <!-- Placeholder فعلی -->
-                                <div class="w-full h-full bg-deep-emerald flex items-center justify-center group-hover:bg-forest-noir transition-colors duration-300">
-                                    <span class="font-satoshi font-black text-h2 text-champagne-gold">S</span>
-                                </div>
+                                <img class="w-full h-full object-cover" src="<?php echo esc_url(get_template_directory_uri() . '/src/images/logo/logo.png'); ?>" alt="لوگوی کلینیک سرو">
 
                                 <?php
                                 // کد آماده برای زمانی که لوگوی واقعی در پیشخوان تنظیم شود:
