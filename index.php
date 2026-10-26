@@ -214,5 +214,10 @@ get_template_part('template-parts/sections/veneer-showcase');
 get_template_part('template-parts/sections/about-section');
 ?>
 
+<!-- فراخوانی بخش گارانتی و پالیش -->
+<?php
+get_template_part('template-parts/sections/guarantee-section');
+?>
+
 <?php
 get_footer();

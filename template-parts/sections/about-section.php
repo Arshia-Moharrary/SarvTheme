@@ -54,7 +54,7 @@ if (! defined('ABSPATH')) {
             <div class="lg:col-span-7 flex flex-col gap-8 reveal-up delay-100">
 
                 <!-- پاراگراف اصلی -->
-                <p class="text-body-range text-charcoal/80 leading-relaxed font-peyda text-justify">
+                <p class="lg:px-0 px-4 text-body-range text-charcoal/80 leading-relaxed font-peyda text-justify">
                     در دکتر سرو همه چیز حول محور سه اصل ساخته شده است: <strong class="text-deep-emerald font-bold">اعتماد، کیفیت و سهولت دسترسی</strong>. ما با همکاری پزشکان متخصص و معتبر، سیستم زمان‌بندی هوشمند، امکان ویزیت حضوری، آنلاین و حتی ویزیت در محل، سعی کرده‌ایم خدمات پزشکی را به سطحی جدید و واقعی از استانداردهای دیجیتال برسانیم.
                 </p>
 
