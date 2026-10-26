@@ -162,6 +162,7 @@ function sarv_nav_fallback(): void
 ?>
     <ul class="flex items-center gap-8">
         <li class="menu-item menu-item-has-children relative group">
+            <li><a href="#" class="hover:text-champagne-gold transition-colors duration-300">صفحه اصلی</a></li>
             <a href="#" class="hover:text-champagne-gold transition-colors duration-300 flex items-center gap-1">
                 خدمات
                 <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -161,3 +161,116 @@
         animation: float 4s ease-in-out 3s infinite;
     }
 }
+
+/* =========================================
+   Animations & Accessibility
+   ========================================= */
+
+/* کلاس‌های انیمیشن ورود (Reveal) */
+.reveal-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-fade {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+}
+
+.reveal-up.is-visible,
+.reveal-fade.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* تاخیرهای پله‌ای (Staggered Delays) */
+.delay-100 {
+    transition-delay: 100ms;
+}
+
+.delay-200 {
+    transition-delay: 200ms;
+}
+
+.delay-300 {
+    transition-delay: 300ms;
+}
+
+.delay-400 {
+    transition-delay: 400ms;
+}
+
+.delay-500 {
+    transition-delay: 500ms;
+}
+
+/* 
+ * احترام به تنظیمات کاربران (Reduced Motion)
+ * اگر کاربر در سیستم‌عامل خود انیمیشن‌ها را غیرفعال کرده باشد، انیمیشن‌ها اجرا نمی‌شوند.
+ */
+@media (prefers-reduced-motion: reduce) {
+
+    .reveal-up,
+    .reveal-fade,
+    .animate-float-1,
+    .animate-float-2,
+    .animate-float-3 {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* بهبود حالت فوکوس برای دسترسی‌پذیری (کیبورد) */
+a:focus-visible,
+button:focus-visible {
+    @apply outline-none ring-2 ring-champagne-gold ring-offset-2 ring-offset-deep-emerald;
+}
+
+/* =========================================
+   Before / After Comparison Slider
+   ========================================= */
+.comparison-container {
+    @apply relative w-full aspect-[4/3] overflow-hidden rounded-brand-lg select-none cursor-ew-resize bg-soft-stone;
+}
+
+.comparison-container img {
+    @apply absolute inset-0 w-full h-full object-cover pointer-events-none;
+}
+
+/* لایه‌ی تصویر "قبل" (این لایه برش می‌خورد) */
+.comparison-before {
+    @apply absolute inset-0 w-full h-full overflow-hidden z-10 border-e-2 border-champagne-gold;
+    width: 50%;
+    /* مقدار اولیه ۵۰ درصد */
+    transition: width 0.05s linear;
+    /* برای حرکت روان‌تر هنگام درگ */
+}
+
+/* دستگیره وسط */
+.comparison-handle {
+    @apply absolute top-1/2 -translate-y-1/2 -translate-x-1/2 z-20 w-10 h-10 bg-champagne-gold rounded-full flex items-center justify-center shadow-xl text-deep-emerald;
+    left: 50%;
+    /* موقعیت اولیه */
+    transition: left 0.05s linear;
+}
+
+/* برچسب‌های قبل و بعد */
+.comparison-badge {
+    @apply absolute top-4 z-20 px-3 py-1 rounded-full text-caption font-bold font-peyda backdrop-blur-md shadow-sm pointer-events-none;
+}
+
+.badge-before {
+    @apply end-4 bg-deep-emerald/80 text-warm-ivory;
+}
+
+.badge-after {
+    @apply start-4 bg-champagne-gold/90 text-deep-emerald;
+}
+
+/* استایل فایل ورودی مخفی (برای دسترسی‌پذیری با کیبورد) */
+.comparison-input {
+    @apply absolute inset-0 w-full h-full opacity-0 z-30 cursor-ew-resize m-0 p-0;
+}

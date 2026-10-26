@@ -105,4 +105,75 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // ==========================================
+    // Scroll Reveal Animations (Intersection Observer)
+    // ==========================================
+    const revealElements = document.querySelectorAll('.reveal-up, .reveal-fade');
+
+    if (revealElements.length > 0) {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -50px 0px', // کمی زودتر از رسیدن به انتهای صفحه فعال شود
+            threshold: 0.1 // وقتی ۱۰٪ از عنصر دیده شد
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    // پس از اجرای انیمیشن، observer از روی این عنصر برداشته می‌شود تا منابع هدر نرود
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => observer.observe(el));
+    }
+
+    // ==========================================
+    // Before / After Comparison Slider
+    // ==========================================
+    const comparisonContainers = document.querySelectorAll('.comparison-container');
+
+    comparisonContainers.forEach(container => {
+        const input = container.querySelector('.comparison-input');
+        const beforeLayer = container.querySelector('.comparison-before');
+        const handle = container.querySelector('.comparison-handle');
+
+        if (input && beforeLayer && handle) {
+            const updateSlider = (value) => {
+                // اعمال درصد به لایه قبل و موقعیت دستگیره
+                beforeLayer.style.width = `${value}%`;
+                handle.style.left = `${value}%`;
+            };
+
+            // رویداد تغییر مقدار (با ماوس، لمس یا کیبورد)
+            input.addEventListener('input', (e) => {
+                updateSlider(e.target.value);
+            });
+
+            // در RTL، شاید بخواهیم جهت حرکت را برعکس کنیم؟ 
+            // خیر، ما از left استفاده می‌کنیم چون input از 0 تا 100 حرکت می‌کند.
+            // اگر در RTL حرکت برعکس بود، در CSS آن را اصلاح می‌کنیم.
+            // برای سادگی و سازگاری با input type="range"، در RTL باید دقت کنیم.
+            // در واقع، ما در CSS از left استفاده کردیم که فیزیکی است.
+            // اگر راست‌چین هستیم، بهتر است لایه "قبل" از سمت راست شروع شود.
+            // اما استاندارد اسلایدرها این است که از چپ به راست کار کنند.
+            // بیایید با یک راه‌حل ساده این را مدیریت کنیم: 
+            // اگر dir="rtl" بود، مقدار را معکوس می‌کنیم.
+
+            if (document.documentElement.dir === 'rtl') {
+                input.addEventListener('input', (e) => {
+                    // در RTL، وقتی کاربر به سمت چپ می‌کشد، مقدار باید زیاد شود
+                    // چون لایه قبل در سمت راست قرار دارد
+                    const value = 100 - e.target.value;
+                    beforeLayer.style.width = `${e.target.value}%`;
+                    // در RTL، با استفاده از right موقعیت‌دهی می‌کنیم
+                    handle.style.left = `${e.target.value}%`;
+                    // (نکته: برای سازگاری کامل با RTL، از راست‌چین استفاده می‌کنیم)
+                });
+            }
+        }
+    });
 });
