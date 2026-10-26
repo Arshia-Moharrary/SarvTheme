@@ -1,2 +1,66 @@
-/* src/css/app.css */
 @import "tailwindcss";
+@import "./fonts.css";
+
+@theme {
+    /* =========================================
+     1. Colors (Brand Identity)
+     ========================================= */
+    --color-deep-emerald: #0E3B32;
+    --color-warm-ivory: #F6F3EC;
+    --color-champagne-gold: #C8A56A;
+    --color-forest-noir: #082A24;
+    --color-charcoal: #242725;
+    --color-soft-stone: #D8D5CE;
+
+    /* =========================================
+     2. Typography - Font Families
+     ========================================= */
+    /* فونت پیش‌فرض سایت (Satoshi برای لاتین و Peyda برای فارسی) */
+    --font-sans: 'Satoshi', 'Peyda', ui-sans-serif, system-ui, sans-serif;
+    --font-peyda: 'Peyda', sans-serif;
+    --font-satoshi: 'Satoshi', sans-serif;
+
+    /* =========================================
+     3. Typography - Font Sizes & Line Heights
+     (Based on the uploaded Typography Scale Image)
+     ========================================= */
+    /* Display / Hero: 64px */
+    --text-hero: 4rem;
+    --text-hero--line-height: 1.2;
+    --text-hero--letter-spacing: -0.02em;
+
+    /* H1: 48px */
+    --text-h1: 3rem;
+    --text-h1--line-height: 1.2;
+    --text-h1--letter-spacing: -0.01em;
+
+    /* H2: 36px */
+    --text-h2: 2.25rem;
+    --text-h2--line-height: 1.3;
+    --text-h2--letter-spacing: -0.01em;
+
+    /* H3: 26px */
+    --text-h3: 1.625rem;
+    --text-h3--line-height: 1.4;
+
+    /* Body Range: 20px */
+    --text-body-range: 1.25rem;
+    --text-body-range--line-height: 1.6;
+
+    /* Body: 16px */
+    --text-body: 1rem;
+    --text-body--line-height: 1.6;
+
+    /* Caption / Label: 12px */
+    --text-caption: 0.75rem;
+    --text-caption--line-height: 1.5;
+
+    /* =========================================
+     4. Radii (Base)
+     (Temporary base until UI is received)
+     ========================================= */
+    --radius-brand: 0.75rem;
+    /* 12px */
+    --radius-brand-lg: 1.5rem;
+    /* 24px */
+}
