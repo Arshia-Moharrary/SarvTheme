@@ -64,3 +64,37 @@
     --radius-brand-lg: 1.5rem;
     /* 24px */
 }
+
+/* =========================================
+   Base RTL & Brand Overrides
+   ========================================= */
+@layer base {
+    html {
+        /* جلوگیری از اسکرول افقی در موبایل */
+        overflow-x: hidden;
+    }
+
+    /* استایل‌دهی به انتخاب متن (Selection) با رنگ برند */
+    ::selection {
+        background-color: var(--color-champagne-gold);
+        color: var(--color-deep-emerald);
+    }
+
+    /* استایل‌دهی به اسکرول‌بار برای مرورگرهای Webkit (Chrome, Safari, Edge) */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--color-warm-ivory);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--color-soft-stone);
+        border-radius: var(--radius-brand);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--color-deep-emerald);
+    }
+}

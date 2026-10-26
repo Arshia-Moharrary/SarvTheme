@@ -101,3 +101,18 @@ function sarv_add_module_type( string $tag, string $handle, string $src ): strin
 
 // حذف استایل پیش‌فرض قالب در صورت نیاز (چون از Tailwind استفاده می‌کنیم)
 // در این مرحله نیازی نیست، اما در مراحل بعدی می‌توانیم style.css اصلی وردپرس را حذف کنیم.
+
+/**
+ * تحمیل ویژگی‌های زبان و جهت‌نویسی به تگ <html>
+ * این تضمین می‌کند که سایت همیشه RTL باشد، حتی اگر زبان پیشخوان انگلیسی باشد.
+ */
+function sarv_force_rtl_language_attributes( string $output ): string {
+    // در پیشخوان وردپرس دخالت نمی‌کنیم
+    if ( is_admin() ) {
+        return $output;
+    }
+    
+    // تنظیم قطعی dir="rtl" و lang="fa-IR"
+    return 'dir="rtl" lang="fa-IR"';
+}
+add_filter( 'language_attributes', 'sarv_force_rtl_language_attributes' );
