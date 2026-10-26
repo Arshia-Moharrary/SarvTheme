@@ -181,3 +181,32 @@ function sarv_nav_fallback(): void
     </ul>
 <?php
 }
+
+/**
+ * Fallback برای منوی موبایل
+ */
+function sarv_nav_fallback_mobile(): void
+{
+?>
+    <ul class="flex flex-col gap-4">
+        <li class="menu-item menu-item-has-children relative group">
+            <div class="flex items-center justify-between cursor-pointer group">
+                <a href="#" class="hover:text-champagne-gold transition-colors duration-300">خدمات</a>
+                <!-- آیکون فلش برای موبایل -->
+                <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+            </div>
+            <!-- Submenu موبایل -->
+            <ul class="mt-3 ps-4 flex flex-col gap-2 border-s-2 border-soft-stone/50 text-charcoal/80">
+                <li><a href="#" class="block py-1 hover:text-champagne-gold transition-colors">کامپوزیت</a></li>
+                <li><a href="#" class="block py-1 hover:text-champagne-gold transition-colors">لمینت</a></li>
+                <li><a href="#" class="block py-1 hover:text-champagne-gold transition-colors">ایمپلنت</a></li>
+                <li><a href="#" class="block py-1 hover:text-champagne-gold transition-colors">بلیچینگ</a></li>
+            </ul>
+        </li>
+        <li><a href="#" class="hover:text-champagne-gold transition-colors duration-300 block py-2">وبلاگ</a></li>
+        <li><a href="#" class="hover:text-champagne-gold transition-colors duration-300 block py-2">درباره ما</a></li>
+    </ul>
+<?php
+}
