@@ -209,5 +209,10 @@ get_template_part('template-parts/hero/features');
 get_template_part('template-parts/sections/veneer-showcase');
 ?>
 
+<!-- فراخوانی بخش درباره ما -->
+<?php
+get_template_part('template-parts/sections/about-section');
+?>
+
 <?php
 get_footer();

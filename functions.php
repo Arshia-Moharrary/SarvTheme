@@ -255,3 +255,46 @@ function sarv_customize_hero_settings(WP_Customize_Manager $wp_customize): void
     }
 }
 add_action('customize_register', 'sarv_customize_hero_settings');
+
+/**
+ * افزودن تنظیمات بخش About (آمار) به سفارشی‌ساز وردپرس
+ */
+function sarv_customize_about_settings( WP_Customize_Manager $wp_customize ): void {
+    $wp_customize->add_section( 'sarv_about_settings', array(
+        'title'    => __( 'تنظیمات بخش درباره ما', 'sarv' ),
+        'priority' => 32,
+    ) );
+
+    // ۴ کارت آماری
+    $stats = array(
+        '1' => __( 'کارت اول (مثلاً رزرو موفق)', 'sarv' ),
+        '2' => __( 'کارت دوم (مثلاً رضایت کاربران)', 'sarv' ),
+        '3' => __( 'کارت سوم (مثلاً سابقه)', 'sarv' ),
+        '4' => __( 'کارت چهارم (مثلاً پزشک فعال)', 'sarv' ),
+    );
+
+    foreach ( $stats as $index => $label ) {
+        // فیلد عدد
+        $wp_customize->add_setting( "sarv_about_stat_{$index}_number", array(
+            'default'           => '+۵K',
+            'sanitize_callback' => 'sanitize_text_field',
+        ) );
+        $wp_customize->add_control( "sarv_about_stat_{$index}_number", array(
+            'label'   => sprintf( __( 'عدد - %s', 'sarv' ), $label ),
+            'section' => 'sarv_about_settings',
+            'type'    => 'text',
+        ) );
+
+        // فیلد برچسب
+        $wp_customize->add_setting( "sarv_about_stat_{$index}_label", array(
+            'default'           => 'رزرو موفق',
+            'sanitize_callback' => 'sanitize_text_field',
+        ) );
+        $wp_customize->add_control( "sarv_about_stat_{$index}_label", array(
+            'label'   => sprintf( __( 'برچسب - %s', 'sarv' ), $label ),
+            'section' => 'sarv_about_settings',
+            'type'    => 'text',
+        ) );
+    }
+}
+add_action( 'customize_register', 'sarv_customize_about_settings' );
