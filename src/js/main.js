@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealElements.forEach(el => observer.observe(el));
     }
 
-    // ==========================================
+        // ==========================================
     // Before / After Comparison Slider
     // ==========================================
     const comparisonContainers = document.querySelectorAll('.comparison-container');
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             input.addEventListener('input', (e) => {
                 updateSlider(e.target.value);
             });
-
+            
             // در RTL، شاید بخواهیم جهت حرکت را برعکس کنیم؟ 
             // خیر، ما از left استفاده می‌کنیم چون input از 0 تا 100 حرکت می‌کند.
             // اگر در RTL حرکت برعکس بود، در CSS آن را اصلاح می‌کنیم.
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // اما استاندارد اسلایدرها این است که از چپ به راست کار کنند.
             // بیایید با یک راه‌حل ساده این را مدیریت کنیم: 
             // اگر dir="rtl" بود، مقدار را معکوس می‌کنیم.
-
+            
             if (document.documentElement.dir === 'rtl') {
                 input.addEventListener('input', (e) => {
                     // در RTL، وقتی کاربر به سمت چپ می‌کشد، مقدار باید زیاد شود
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const value = 100 - e.target.value;
                     beforeLayer.style.width = `${e.target.value}%`;
                     // در RTL، با استفاده از right موقعیت‌دهی می‌کنیم
-                    handle.style.left = `${e.target.value}%`;
+                    handle.style.left = `${e.target.value}%`; 
                     // (نکته: برای سازگاری کامل با RTL، از راست‌چین استفاده می‌کنیم)
                 });
             }
