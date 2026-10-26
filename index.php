@@ -1,74 +1,99 @@
 <?php
-
 /**
- * The main template file (Temporary RTL Test)
+ * The main template file
+ *
+ * This is the most generic template file in a WordPress theme
+ * and one of the two required files for a theme (the other being style.css).
+ * It is used to display a page when nothing more specific matches a query.
  *
  * @package Sarv
+ * @since 1.0.0
  */
 
-if (! defined('ABSPATH')) {
+if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
 get_header();
 ?>
 
-<section class="p-10 bg-warm-ivory min-h-screen font-sans flex justify-center items-center">
-    <div class="w-full max-w-2xl bg-white rounded-brand shadow-lg border border-soft-stone overflow-hidden">
+<main id="primary" class="site-main min-h-screen bg-warm-ivory pt-24 pb-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <?php
+        if ( have_posts() ) :
+            ?>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <?php
+                // شروع حلقه (The Loop)
+                while ( have_posts() ) :
+                    the_post();
+                    ?>
+                    <article id="post-<?php the_ID(); ?>" <?php post_class( 'bg-white rounded-brand-lg shadow-sm border border-soft-stone overflow-hidden flex flex-col' ); ?>>
+                        
+                        <?php if ( has_post_thumbnail() ) : ?>
+                            <div class="aspect-w-16 aspect-h-9 bg-soft-stone">
+                                <a href="<?php the_permalink(); ?>" class="block h-full w-full">
+                                    <?php the_post_thumbnail( 'large', array( 'class' => 'w-full h-full object-cover transition-transform duration-500 hover:scale-105' ) ); ?>
+                                </a>
+                            </div>
+                        <?php endif; ?>
 
-        <!-- هدر کارت -->
-        <div class="p-6 border-b border-soft-stone bg-deep-emerald text-warm-ivory">
-            <h2 class="text-h3 font-bold m-0">تست منطق RTL و Logical Properties</h2>
-        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <header class="entry-header mb-4">
+                                <?php
+                                the_title( sprintf( '<h2 class="entry-title text-h3 font-bold text-deep-emerald mb-2 leading-tight"><a href="%s" rel="bookmark" class="hover:text-champagne-gold transition-colors duration-300">', esc_url( get_permalink() ) ), '</a></h2>' );
+                                ?>
+                                <div class="text-caption text-charcoal/60 font-peyda">
+                                    <?php echo get_the_date(); ?>
+                                </div>
+                            </header>
 
-        <div class="p-8 space-y-10">
+                            <div class="entry-content text-body text-charcoal/80 font-peyda leading-relaxed mb-6 flex-grow">
+                                <?php
+                                // نمایش خلاصه متن برای جلوگیری از شلوغی کارت‌ها
+                                the_excerpt();
+                                ?>
+                            </div>
 
-            <!-- تست ۱: حاشیه و پدینگ منطقی -->
-            <div>
-                <h3 class="text-body-range font-semibold text-deep-emerald mb-2">۱. Margin Inline-Start (ms) و Padding Inline-Start (ps)</h3>
-                <p class="text-caption text-charcoal mb-4">در این تست، ما از <code class="bg-soft-stone px-1 rounded">ps-6</code> استفاده کرده‌ایم. در حالت RTL، پدینگ باید از سمت <strong>راست</strong> اعمال شود.</p>
-
-                <div class="bg-warm-ivory border border-champagne-gold border-dashed rounded-lg ps-6 py-4">
-                    <div class="bg-champagne-gold text-deep-emerald font-bold p-2 rounded text-caption inline-block">
-                        این باکس باید از سمت راست فاصله داشته باشد (Padding Start)
-                    </div>
-                </div>
+                            <footer class="entry-footer mt-auto pt-4 border-t border-soft-stone/50">
+                                <a href="<?php the_permalink(); ?>" class="inline-flex items-center text-body font-medium text-deep-emerald hover:text-champagne-gold transition-colors duration-300 group">
+                                    <span>مشاهده بیشتر</span>
+                                    <svg class="w-5 h-5 ms-2 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                                    </svg>
+                                </a>
+                            </footer>
+                        </div>
+                    </article>
+                    <?php
+                endwhile;
+                ?>
             </div>
+            
+            <?php
+            // صفحه‌بندی (Pagination)
+            the_posts_pagination( array(
+                'mid_size'  => 2,
+                'prev_text' => __( 'قبلی', 'sarv' ),
+                'next_text' => __( 'بعدی', 'sarv' ),
+                'class'     => 'mt-12 flex justify-center font-peyda',
+            ) );
+            ?>
 
-            <!-- تست ۲: چیدمان فلکس (Flex) -->
-            <div>
-                <h3 class="text-body-range font-semibold text-deep-emerald mb-2">۲. چیدمان Flex (جهت پیش‌فرض)</h3>
-                <p class="text-caption text-charcoal mb-4">در حالت RTL، اولین آیتم در یک کانتینر <code class="bg-soft-stone px-1 rounded">flex</code> باید در سمت <strong>راست</strong> قرار بگیرد.</p>
-
-                <div class="flex items-center gap-4 bg-warm-ivory border border-soft-stone p-4 rounded-lg">
-                    <div class="w-12 h-12 bg-deep-emerald rounded-full flex items-center justify-center text-white font-bold">۱</div>
-                    <div class="w-12 h-12 bg-champagne-gold rounded-full flex items-center justify-center text-white font-bold">۲</div>
-                    <div class="w-12 h-12 bg-charcoal rounded-full flex items-center justify-center text-white font-bold">۳</div>
-                    <div class="ms-auto text-caption text-charcoal bg-soft-stone px-3 py-1 rounded-full">
-                        من با <code class="font-bold">ms-auto</code> به سمت چپ (End) هل داده شدم.
-                    </div>
-                </div>
+        <?php
+        else :
+            ?>
+            <div class="text-center py-20">
+                <h2 class="text-h2 font-bold text-deep-emerald mb-4 font-peyda"><?php esc_html_e( 'محتوایی یافت نشد', 'sarv' ); ?></h2>
+                <p class="text-body text-charcoal/70 font-peyda"><?php esc_html_e( 'متأسفانه در حال حاضر محتوایی برای نمایش وجود ندارد.', 'sarv' ); ?></p>
             </div>
+            <?php
+        endif;
+        ?>
 
-            <!-- تست ۳: ترازبندی متن (Text Alignment) -->
-            <div>
-                <h3 class="text-body-range font-semibold text-deep-emerald mb-2">۳. ترازبندی متن (text-start vs text-end)</h3>
-
-                <div class="space-y-4">
-                    <div class="text-start bg-warm-ivory p-4 rounded-lg border border-soft-stone">
-                        <span class="text-caption text-gray-500 block mb-1">text-start</span>
-                        <p class="text-body text-charcoal m-0">این متن باید به سمت راست (شروع جمله در فارسی) تراز شود.</p>
-                    </div>
-                    <div class="text-end bg-warm-ivory p-4 rounded-lg border border-soft-stone">
-                        <span class="text-caption text-gray-500 block mb-1">text-end</span>
-                        <p class="text-body text-charcoal m-0">این متن باید به سمت چپ (پایان جمله در فارسی) تراز شود.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </div>
-</section>
+</main>
 
 <?php
 get_footer();
