@@ -1,13 +1,8 @@
 <?php
 /**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
+ * The main template file (Mock Hero for Header Connection Test)
  *
  * @package Sarv
- * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -17,83 +12,50 @@ if ( ! defined( 'ABSPATH' ) ) {
 get_header();
 ?>
 
-<main id="primary" class="site-main min-h-screen bg-warm-ivory pt-24 pb-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <?php
-        if ( have_posts() ) :
-            ?>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <?php
-                // شروع حلقه (The Loop)
-                while ( have_posts() ) :
-                    the_post();
-                    ?>
-                    <article id="post-<?php the_ID(); ?>" <?php post_class( 'bg-white rounded-brand-lg shadow-sm border border-soft-stone overflow-hidden flex flex-col' ); ?>>
-                        
-                        <?php if ( has_post_thumbnail() ) : ?>
-                            <div class="aspect-w-16 aspect-h-9 bg-soft-stone">
-                                <a href="<?php the_permalink(); ?>" class="block h-full w-full">
-                                    <?php the_post_thumbnail( 'large', array( 'class' => 'w-full h-full object-cover transition-transform duration-500 hover:scale-105' ) ); ?>
-                                </a>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="p-6 flex flex-col flex-grow">
-                            <header class="entry-header mb-4">
-                                <?php
-                                the_title( sprintf( '<h2 class="entry-title text-h3 font-bold text-deep-emerald mb-2 leading-tight"><a href="%s" rel="bookmark" class="hover:text-champagne-gold transition-colors duration-300">', esc_url( get_permalink() ) ), '</a></h2>' );
-                                ?>
-                                <div class="text-caption text-charcoal/60 font-peyda">
-                                    <?php echo get_the_date(); ?>
-                                </div>
-                            </header>
-
-                            <div class="entry-content text-body text-charcoal/80 font-peyda leading-relaxed mb-6 flex-grow">
-                                <?php
-                                // نمایش خلاصه متن برای جلوگیری از شلوغی کارت‌ها
-                                the_excerpt();
-                                ?>
-                            </div>
-
-                            <footer class="entry-footer mt-auto pt-4 border-t border-soft-stone/50">
-                                <a href="<?php the_permalink(); ?>" class="inline-flex items-center text-body font-medium text-deep-emerald hover:text-champagne-gold transition-colors duration-300 group">
-                                    <span>مشاهده بیشتر</span>
-                                    <svg class="w-5 h-5 ms-2 transform group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                                    </svg>
-                                </a>
-                            </footer>
-                        </div>
-                    </article>
-                    <?php
-                endwhile;
-                ?>
-            </div>
-            
-            <?php
-            // صفحه‌بندی (Pagination)
-            the_posts_pagination( array(
-                'mid_size'  => 2,
-                'prev_text' => __( 'قبلی', 'sarv' ),
-                'next_text' => __( 'بعدی', 'sarv' ),
-                'class'     => 'mt-12 flex justify-center font-peyda',
-            ) );
-            ?>
-
-        <?php
-        else :
-            ?>
-            <div class="text-center py-20">
-                <h2 class="text-h2 font-bold text-deep-emerald mb-4 font-peyda"><?php esc_html_e( 'محتوایی یافت نشد', 'sarv' ); ?></h2>
-                <p class="text-body text-charcoal/70 font-peyda"><?php esc_html_e( 'متأسفانه در حال حاضر محتوایی برای نمایش وجود ندارد.', 'sarv' ); ?></p>
-            </div>
-            <?php
-        endif;
-        ?>
-
+<!-- Mock Hero Section -->
+<section class="relative bg-deep-emerald text-warm-ivory pt-32 pb-24 rounded-t-[3rem] mx-2 md:mx-4 -mt-4 overflow-hidden shadow-2xl z-10">
+    
+    <!-- المان‌های تزئینی پس‌زمینه (مشابه تصویر مرجع) -->
+    <div class="absolute top-10 left-10 opacity-20">
+        <svg class="w-12 h-12 text-champagne-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
     </div>
-</main>
+    <div class="absolute bottom-20 right-10 opacity-20">
+        <svg class="w-16 h-16 text-champagne-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex flex-col items-center text-center max-w-3xl mx-auto mt-8">
+            <h1 class="text-hero font-black font-peyda text-warm-ivory mb-6 leading-tight">
+                نوبت دکتر رو <span class="text-champagne-gold">آتلاین</span> بگیر
+            </h1>
+            <p class="text-body-range text-warm-ivory/80 font-peyda mb-10 leading-relaxed">
+                با چند کلیک ساده و سریع، پزشک معتبر پیدا کن، نوبت رزرو کن و از خدمات پزشکی مطمئن و حرفه‌ای در هر زمان و هر مکان استفاده کن.
+            </p>
+            <div class="flex items-center gap-4">
+                <a href="#" class="bg-champagne-gold text-deep-emerald px-8 py-3 rounded-brand text-body font-bold hover:bg-warm-ivory transition-colors duration-300 shadow-lg">
+                    رزرو نوبت
+                </a>
+                <a href="#" class="bg-transparent border-2 border-warm-ivory/30 text-warm-ivory px-8 py-3 rounded-brand text-body font-bold hover:bg-warm-ivory/10 transition-colors duration-300">
+                    درباره ما
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- المان تزئینی پایین Hero -->
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 z-20">
+        <div class="w-12 h-12 bg-champagne-gold rounded-full flex items-center justify-center shadow-lg text-deep-emerald">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </div>
+</section>
+
+<!-- بقیه محتوای صفحه (برای تست اسکرول) -->
+<div class="max-w-7xl mx-auto px-4 py-20">
+    <div class="bg-white rounded-brand-lg shadow-sm border border-soft-stone p-10 min-h-[500px] flex items-center justify-center text-charcoal/50 font-peyda text-h2">
+        محتوای صفحات بعدی در اینجا قرار می‌گیرد...
+    </div>
+</div>
 
 <?php
 get_footer();
