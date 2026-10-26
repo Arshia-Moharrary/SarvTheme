@@ -1,0 +1,21 @@
+/*
+Theme Name: Sarv Dental
+Theme URI: https://sarvdental.clinic/
+Author: Arshia Moharrary
+Author URI: https://arshia.tech | https://t.me/arshia_moon
+Description: Custom WordPress theme for Sarv Dental - Premium Smile Design & Aesthetic Dentistry.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 8.2
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: sarv
+Tags: custom-theme, rtl-language-support
+*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
