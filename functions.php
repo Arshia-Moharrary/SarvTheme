@@ -210,3 +210,47 @@ function sarv_nav_fallback_mobile(): void
     </ul>
 <?php
 }
+
+/**
+ * افزودن تنظیمات بخش Hero به سفارشی‌ساز وردپرس (Customizer)
+ */
+function sarv_customize_hero_settings(WP_Customize_Manager $wp_customize): void
+{
+    // بخش Hero
+    $wp_customize->add_section('sarv_hero_settings', array(
+        'title'    => __('تنظیمات بخش Hero (داده‌های آماری)', 'sarv'),
+        'priority' => 31,
+    ));
+
+    // آرایه‌ای برای ایجاد حلقه و جلوگیری از تکرار کد
+    $stats = array(
+        '1' => __('کارت اول (مثلاً تعداد پزشکان)', 'sarv'),
+        '2' => __('کارت دوم (مثلاً رضایت کاربران)', 'sarv'),
+        '3' => __('کارت سوم (مثلاً نوبت‌های رزرو شده)', 'sarv'),
+    );
+
+    foreach ($stats as $index => $label) {
+        // فیلد عدد
+        $wp_customize->add_setting("sarv_stat_{$index}_number", array(
+            'default'           => '+۳۵۰',
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control("sarv_stat_{$index}_number", array(
+            'label'   => sprintf(__('عدد - %s', 'sarv'), $label),
+            'section' => 'sarv_hero_settings',
+            'type'    => 'text',
+        ));
+
+        // فیلد برچسب
+        $wp_customize->add_setting("sarv_stat_{$index}_label", array(
+            'default'           => 'پزشک فعال',
+            'sanitize_callback' => 'sanitize_text_field',
+        ));
+        $wp_customize->add_control("sarv_stat_{$index}_label", array(
+            'label'   => sprintf(__('برچسب - %s', 'sarv'), $label),
+            'section' => 'sarv_hero_settings',
+            'type'    => 'text',
+        ));
+    }
+}
+add_action('customize_register', 'sarv_customize_hero_settings');

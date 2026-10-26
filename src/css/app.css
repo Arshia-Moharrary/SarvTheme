@@ -98,3 +98,24 @@
         background: var(--color-deep-emerald);
     }
 }
+
+/* =========================================
+   Components (Reusable UI Elements)
+   ========================================= */
+@layer components {
+
+    /* دکمه پایه (شامل پدینگ، انیمیشن و ساختار کلی) */
+    .btn {
+        @apply inline-flex items-center justify-center px-8 py-3.5 rounded-brand text-body font-bold transition-all duration-300 font-peyda;
+    }
+
+    /* دکمه اصلی (Primary) - طلایی */
+    .btn-primary {
+        @apply bg-champagne-gold text-deep-emerald hover:bg-warm-ivory hover:text-deep-emerald shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+    }
+
+    /* دکمه ثانویه (Outline) - حاشیه‌دار */
+    .btn-outline {
+        @apply border-2 border-warm-ivory/30 text-warm-ivory hover:bg-warm-ivory/10 hover:border-warm-ivory/60;
+    }
+}
