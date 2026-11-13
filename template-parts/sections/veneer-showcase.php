@@ -20,7 +20,7 @@ if (! defined('ABSPATH')) {
         <!-- هدر بخش -->
         <div class="text-center max-w-2xl mx-auto mb-16 reveal-up">
             <span class="text-champagne-gold font-bold text-body font-peyda tracking-wider uppercase mb-2 block">ویترین شاهکارها</span>
-            <h2 class="text-h2 font-black text-deep-emerald font-peyda mb-4">نمونه‌کارهای لمینت دندان</h2>
+            <h2 class="text-h3 font-black text-deep-emerald font-peyda mb-4">نمونه‌کارهای لمینت دندان</h2>
             <p class="text-body-range text-charcoal/70 font-peyda leading-relaxed">
                 با کشیدن دستگیره طلایی روی تصاویر، تفاوت شگفت‌انگیز طراحی لبخند را با جدیدترین تکنیک‌های لمینت سرامیکی مشاهده کنید.
             </p>

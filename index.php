@@ -219,5 +219,10 @@ get_template_part('template-parts/sections/about-section');
 get_template_part('template-parts/sections/guarantee-section');
 ?>
 
+<!-- فراخوانی بخش مجله آموزشی -->
+<?php
+get_template_part('template-parts/sections/blog-magazine');
+?>
+
 <?php
 get_footer();

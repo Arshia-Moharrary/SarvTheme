@@ -1,8 +1,18 @@
+
 /**
  * Sarv Theme - Main JavaScript
  * 
  * @package Sarv
  */
+
+// Import Swiper CSS
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+// Import Swiper JS
+import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay, A11y } from 'swiper/modules';
 
 document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
@@ -131,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         revealElements.forEach(el => observer.observe(el));
     }
 
-        // ==========================================
+    // ==========================================
     // Before / After Comparison Slider
     // ==========================================
     const comparisonContainers = document.querySelectorAll('.comparison-container');
@@ -152,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
             input.addEventListener('input', (e) => {
                 updateSlider(e.target.value);
             });
-            
+
             // در RTL، شاید بخواهیم جهت حرکت را برعکس کنیم؟ 
             // خیر، ما از left استفاده می‌کنیم چون input از 0 تا 100 حرکت می‌کند.
             // اگر در RTL حرکت برعکس بود، در CSS آن را اصلاح می‌کنیم.
@@ -162,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // اما استاندارد اسلایدرها این است که از چپ به راست کار کنند.
             // بیایید با یک راه‌حل ساده این را مدیریت کنیم: 
             // اگر dir="rtl" بود، مقدار را معکوس می‌کنیم.
-            
+
             if (document.documentElement.dir === 'rtl') {
                 input.addEventListener('input', (e) => {
                     // در RTL، وقتی کاربر به سمت چپ می‌کشد، مقدار باید زیاد شود
@@ -170,10 +180,54 @@ document.addEventListener('DOMContentLoaded', () => {
                     const value = 100 - e.target.value;
                     beforeLayer.style.width = `${e.target.value}%`;
                     // در RTL، با استفاده از right موقعیت‌دهی می‌کنیم
-                    handle.style.left = `${e.target.value}%`; 
+                    handle.style.left = `${e.target.value}%`;
                     // (نکته: برای سازگاری کامل با RTL، از راست‌چین استفاده می‌کنیم)
                 });
             }
         }
     });
+
+    // ==========================================
+    // Blog Magazine Swiper
+    // ==========================================
+    const blogSwiperEl = document.querySelector('.blog-swiper');
+
+    if (blogSwiperEl) {
+        const blogSwiper = new Swiper(blogSwiperEl, {
+            modules: [Navigation, Pagination, Autoplay, A11y],
+            slidesPerView: 1,
+            spaceBetween: 24,
+            loop: true,
+            rtl: true, // فعال‌سازی RTL
+            watchOverflow: true,
+            grabCursor: true, // نشانگر دست برای کشیدن در دسکتاپ
+            autoplay: {
+                delay: 4500,
+                disableOnInteraction: false,
+                pauseOnMouseEnter: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 24,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 32,
+                },
+            },
+            a11y: {
+                prevSlideMessage: 'اسلاید قبلی',
+                nextSlideMessage: 'اسلاید بعدی',
+            }
+        });
+    }
 });
