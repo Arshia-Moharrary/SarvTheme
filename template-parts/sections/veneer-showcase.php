@@ -11,100 +11,251 @@ if (! defined('ABSPATH')) {
 }
 ?>
 
-<section class="py-24 bg-warm-ivory relative overflow-hidden">
-    <!-- المان تزئینی پس‌زمینه -->
-    <div class="absolute top-0 right-0 w-64 h-64 bg-champagne-gold opacity-[0.03] rounded-bl-full pointer-events-none"></div>
+<?php
+/**
+ * Veneer Showcase — before / after comparisons (1:1 photographs).
+ *
+ * Map your existing cases into $sarv_veneer_cases (the only integration point):
+ *   'before' / 'after' → image URLs (use your existing paths), 1000×1000 or any square size
+ *   'meta'             → optional clinical details, e.g. [ ['label' => '...', 'value' => '...'] ]
+ */
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+$sarv_img = get_template_directory_uri() . '/src/images/veneers/'; // ← adjust to your real folder
 
-        <!-- هدر بخش -->
-        <div class="text-center max-w-2xl mx-auto mb-16 reveal-up">
-            <span class="text-champagne-gold font-bold text-body font-peyda tracking-wider uppercase mb-2 block">ویترین شاهکارها</span>
-            <h2 class="text-h3 font-black text-deep-emerald font-peyda mb-4">نمونه‌کارهای لمینت دندان</h2>
-            <p class="text-body-range text-charcoal/70 font-peyda leading-relaxed">
-                با کشیدن دستگیره طلایی روی تصاویر، تفاوت شگفت‌انگیز طراحی لبخند را با جدیدترین تکنیک‌های لمینت سرامیکی مشاهده کنید.
-            </p>
-            <div class="w-24 h-1 bg-champagne-gold mx-auto mt-8 rounded-full"></div>
-        </div>
+$sarv_veneer_title = 'تفاوت را خودتان ببینید';
+$sarv_veneer_intro = 'نمونه‌هایی واقعی از لمینت‌های انجام‌شده در کلینیک سرو؛ هر دو تصویر مربوط به یک بیمار است.';
+$sarv_veneer_hint  = 'برای مقایسه، دستگیره را بکشید';
 
-        <!-- گرید نمونه‌کارها -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+$sarv_veneer_cases = [
+    [
+        'title'       => 'طراحی لبخند با لمینت — نمونه اول',
+        'description' => 'شرح کوتاه این درمان را اینجا بنویسید.',
+        'before'      => $sarv_img . 'before-1.jpg',
+        'after'       => $sarv_img . 'after-1.jpg',
+        'meta'        => [], // e.g. [ ['label' => 'نوع درمان', 'value' => 'لمینت سرامیکی'] ]
+    ],
+    [
+        'title'       => 'طراحی لبخند با لمینت — نمونه دوم',
+        'description' => 'شرح کوتاه این درمان را اینجا بنویسید.',
+        'before'      => $sarv_img . 'before-2.jpg',
+        'after'       => $sarv_img . 'after-2.jpg',
+        'meta'        => [],
+    ],
+    [
+        'title'       => 'طراحی لبخند با لمینت — نمونه سوم',
+        'description' => 'شرح کوتاه این درمان را اینجا بنویسید.',
+        'before'      => $sarv_img . 'before-3.jpg',
+        'after'       => $sarv_img . 'after-3.jpg',
+        'meta'        => [],
+    ],
+];
 
-            <!-- کارت نمونه‌کار ۱ -->
-            <div class="bg-white rounded-brand-lg p-4 shadow-sm border border-soft-stone/50 hover:shadow-xl transition-shadow duration-300 reveal-up delay-100">
-                <div class="comparison-container group">
-                    <!-- تصویر بعد (پس‌زمینه) -->
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/src/images/after-1.jpg'); ?>" alt="بعد از لمینت" onerror="this.src='https://placehold.co/600x450/C8A56A/FFFFFF?text=After'">
+$sarv_rtl_class = is_rtl() ? 'veneer-compare--rtl' : '';
+?>
 
-                    <!-- تصویر قبل (لایه رویی) -->
-                    <div class="comparison-before" style="width: 50%;">
-                        <img src="<?php echo esc_url(get_template_directory_uri() . '/src/images/before-1.jpg'); ?>" alt="قبل از لمینت" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x450/0E3B32/FFFFFF?text=Before'">
-                    </div>
+<section id="veneer-showcase" aria-labelledby="veneer-title" class="relative bg-warm-ivory text-charcoal py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                    <!-- برچسب‌ها -->
-                    <span class="comparison-badge badge-before">قبل</span>
-                    <span class="comparison-badge badge-after">بعد</span>
+        <!-- ============ Header ============ -->
+        <header class="grid grid-cols-1 lg:grid-cols-12 items-end gap-6 lg:gap-12 mb-12 lg:mb-16">
+            <h2 id="veneer-title" class="lg:col-span-7 text-h3 sm:text-h2 font-black font-peyda text-deep-emerald leading-[1.3] tracking-normal reveal-up">
+                <?php echo esc_html($sarv_veneer_title); ?>
+            </h2>
 
-                    <!-- دستگیره -->
-                    <div class="comparison-handle">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18m-4-4l4 4 4-4"></path>
-                        </svg>
-                    </div>
-
-                    <!-- Input مخفی برای دسترسی‌پذیری -->
-                    <input type="range" min="0" max="100" value="50" class="comparison-input" aria-label="مقایسه قبل و بعد از لمینت">
-                </div>
-                <div class="pt-6 pb-2 px-2 text-center">
-                    <h3 class="text-h3 font-bold text-deep-emerald font-peyda mb-1">طراحی لبخند با ۸ لمینت</h3>
-                    <p class="text-caption text-charcoal/60 font-peyda">تغییر رنگ و اصلاح فرم دندان‌ها</p>
-                </div>
+            <div class="lg:col-span-5 reveal-up delay-100">
+                <p class="text-body-range text-charcoal/70 font-peyda leading-relaxed max-w-xl">
+                    <?php echo esc_html($sarv_veneer_intro); ?>
+                </p>
+                <p class="mt-5 inline-flex items-center gap-3 text-caption font-bold font-peyda text-deep-emerald">
+                    <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-deep-emerald text-champagne-gold" aria-hidden="true">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path></svg>
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                    </span>
+                    <?php echo esc_html($sarv_veneer_hint); ?>
+                </p>
             </div>
+        </header>
 
-            <!-- کارت نمونه‌کار ۲ (برای نمایش چیدمان گرید) -->
-            <div class="bg-white rounded-brand-lg p-4 shadow-sm border border-soft-stone/50 hover:shadow-xl transition-shadow duration-300 reveal-up delay-200">
-                <div class="comparison-container group">
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/src/images/after-2.jpg'); ?>" alt="بعد از لمینت" onerror="this.src='https://placehold.co/600x450/C8A56A/FFFFFF?text=After'">
-                    <div class="comparison-before" style="width: 50%;">
-                        <img src="<?php echo esc_url(get_template_directory_uri() . '/src/images/before-2.jpg'); ?>" alt="قبل از لمینت" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x450/0E3B32/FFFFFF?text=Before'">
-                    </div>
-                    <span class="comparison-badge badge-before">قبل</span>
-                    <span class="comparison-badge badge-after">بعد</span>
-                    <div class="comparison-handle">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18m-4-4l4 4 4-4"></path>
-                        </svg>
-                    </div>
-                    <input type="range" min="0" max="100" value="50" class="comparison-input" aria-label="مقایسه قبل و بعد از لمینت">
-                </div>
-                <div class="pt-6 pb-2 px-2 text-center">
-                    <h3 class="text-h3 font-bold text-deep-emerald font-peyda mb-1">بستن فاصله دندان‌ها</h3>
-                    <p class="text-caption text-charcoal/60 font-peyda">با لمینت‌های نازک بدون تراش</p>
-                </div>
-            </div>
+        <!-- ============ Cases ============
+             Phone: stacked, full-width squares.
+             Tablet: square left / text right, alternating sides.
+             Desktop: three squares, middle one dropped for rhythm. -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 items-start gap-14 md:gap-16 lg:gap-8 xl:gap-10">
+            <?php foreach ($sarv_veneer_cases as $i => $case) :
+                $title = $case['title'];
+            ?>
+                <article class="flex flex-col md:max-lg:flex-row md:max-lg:items-center md:max-lg:gap-8 md:max-lg:even:flex-row-reverse reveal-up delay-<?php echo ($i + 1) * 100; ?> <?php echo $i === 1 ? 'lg:mt-16' : ''; ?>">
 
-            <!-- کارت نمونه‌کار ۳ -->
-            <div class="bg-white rounded-brand-lg p-4 shadow-sm border border-soft-stone/50 hover:shadow-xl transition-shadow duration-300 reveal-up delay-300">
-                <div class="comparison-container group">
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/src/images/after-3.jpg'); ?>" alt="بعد از لمینت" onerror="this.src='https://placehold.co/600x450/C8A56A/FFFFFF?text=After'">
-                    <div class="comparison-before" style="width: 50%;">
-                        <img src="<?php echo esc_url(get_template_directory_uri() . '/src/images/before-3.jpg'); ?>" alt="قبل از لمینت" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x450/0E3B32/FFFFFF?text=Before'">
-                    </div>
-                    <span class="comparison-badge badge-before">قبل</span>
-                    <span class="comparison-badge badge-after">بعد</span>
-                    <div class="comparison-handle">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7l4-4m0 0l4 4m-4-4v18m-4-4l4 4 4-4"></path>
-                        </svg>
-                    </div>
-                    <input type="range" min="0" max="100" value="50" class="comparison-input" aria-label="مقایسه قبل و بعد از لمینت">
-                </div>
-                <div class="pt-6 pb-2 px-2 text-center">
-                    <h3 class="text-h3 font-bold text-deep-emerald font-peyda mb-1">اصلاح دندان‌های نامرتب</h3>
-                    <p class="text-caption text-charcoal/60 font-peyda">طراحی دیجیتال لبخند (DSD)</p>
-                </div>
-            </div>
+                    <!-- Comparison: After = base layer, Before = clipped layer above. Square, always. -->
+                    <div class="md:max-lg:w-[56%] md:max-lg:shrink-0">
+                        <div
+                            data-compare
+                            dir="ltr"
+                            role="group"
+                            aria-label="<?php echo esc_attr('مقایسه قبل و بعد: ' . $title); ?>"
+                            class="veneer-compare <?php echo esc_attr($sarv_rtl_class); ?>">
 
+                            <img class="veneer-img"
+                                 src="<?php echo esc_url($case['after']); ?>"
+                                 alt="<?php echo esc_attr('پس از لمینت — ' . $title); ?>"
+                                 width="1000" height="1000"
+                                 sizes="(min-width: 1024px) 33vw, (min-width: 768px) 56vw, 100vw"
+                                 loading="lazy" decoding="async" draggable="false">
+
+                            <div class="veneer-before">
+                                <img class="veneer-img"
+                                     src="<?php echo esc_url($case['before']); ?>"
+                                     alt="<?php echo esc_attr('پیش از لمینت — ' . $title); ?>"
+                                     width="1000" height="1000"
+                                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 56vw, 100vw"
+                                     loading="lazy" decoding="async" draggable="false">
+                            </div>
+
+                            <!-- Labels live in the corners of their own side and are never clipped -->
+                            <span class="veneer-tag veneer-tag--before">قبل</span>
+                            <span class="veneer-tag veneer-tag--after">بعد</span>
+
+                            <div class="veneer-handle"
+                                 data-handle
+                                 role="slider"
+                                 tabindex="0"
+                                 aria-orientation="horizontal"
+                                 aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"
+                                 aria-label="<?php echo esc_attr('دستگیره مقایسه قبل و بعد: ' . $title); ?>">
+                                <span class="veneer-grip" aria-hidden="true">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"></path></svg>
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"></path></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Caption: supports the photographs, never competes with them -->
+                    <div class="pt-5 md:max-lg:pt-0 md:max-lg:flex-1 text-start">
+                        <h3 class="text-h4 font-bold font-peyda text-deep-emerald leading-snug">
+                            <?php echo esc_html($title); ?>
+                        </h3>
+                        <?php if (!empty($case['description'])) : ?>
+                            <p class="mt-2 text-body font-peyda text-charcoal/70 leading-relaxed max-w-prose">
+                                <?php echo esc_html($case['description']); ?>
+                            </p>
+                        <?php endif; ?>
+
+                        <?php if (!empty($case['meta'])) : ?>
+                            <dl class="mt-4 pt-4 border-t border-soft-stone flex flex-wrap gap-x-8 gap-y-3">
+                                <?php foreach ($case['meta'] as $row) : ?>
+                                    <div>
+                                        <dt class="text-caption font-peyda text-charcoal/60"><?php echo esc_html($row['label']); ?></dt>
+                                        <dd class="text-body font-peyda font-bold text-deep-emerald"><?php echo esc_html($row['value']); ?></dd>
+                                    </div>
+                                <?php endforeach; ?>
+                            </dl>
+                        <?php endif; ?>
+                    </div>
+                </article>
+            <?php endforeach; ?>
         </div>
     </div>
+
+    <script>
+    (function () {
+        var frames = document.querySelectorAll('#veneer-showcase [data-compare]');
+        if (!frames.length) return;
+        var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var nf = new Intl.NumberFormat('fa-IR');
+
+        Array.prototype.forEach.call(frames, function (frame, idx) {
+            var handle = frame.querySelector('[data-handle]');
+            var rtl = frame.classList.contains('veneer-compare--rtl'); // RTL: "before" sits on the right
+            var x = 50;            // handle position, % from the physical left edge
+            var raf = 0, nudgeRaf = 0, dragging = false, offset = 0, touched = false;
+
+            function render() {
+                raf = 0;
+                frame.style.setProperty('--x', x.toFixed(2));
+                var before = Math.round(rtl ? 100 - x : x);
+                handle.setAttribute('aria-valuenow', before);
+                handle.setAttribute('aria-valuetext', 'قبل ' + nf.format(before) + '٪ — بعد ' + nf.format(100 - before) + '٪');
+            }
+            function set(v) {
+                x = Math.min(100, Math.max(0, v));
+                if (!raf) raf = requestAnimationFrame(render); // one style write per frame
+            }
+            function xFromEvent(e) {
+                var r = frame.getBoundingClientRect();
+                return ((e.clientX - r.left) / r.width) * 100;
+            }
+            function interacted() {
+                touched = true;
+                if (nudgeRaf) { cancelAnimationFrame(nudgeRaf); nudgeRaf = 0; }
+            }
+
+            // Pointer: mouse can grab anywhere (click jumps). Touch/pen only grab the handle,
+            // so scrolling the page with a finger over a photo never moves the slider.
+            frame.addEventListener('pointerdown', function (e) {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                var onHandle = !!e.target.closest('[data-handle]');
+                if (e.pointerType !== 'mouse' && !onHandle) return;
+                interacted();
+                dragging = true;
+                offset = onHandle ? xFromEvent(e) - x : 0; // no jump when grabbing the handle off-centre
+                frame.setPointerCapture(e.pointerId);
+                frame.classList.add('is-dragging');
+                if (!onHandle) set(xFromEvent(e));
+            });
+            frame.addEventListener('pointermove', function (e) {
+                if (dragging) set(xFromEvent(e) - offset);
+            });
+            function end(e) {
+                if (!dragging) return;
+                dragging = false;
+                frame.classList.remove('is-dragging');
+                try { frame.releasePointerCapture(e.pointerId); } catch (err) {}
+            }
+            frame.addEventListener('pointerup', end);
+            frame.addEventListener('pointercancel', end);
+            frame.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+            // Keyboard (arrow keys follow screen direction; value = share of "before" shown)
+            handle.addEventListener('keydown', function (e) {
+                var step = e.shiftKey ? 10 : 2, next = null;
+                switch (e.key) {
+                    case 'ArrowLeft':  next = x - step; break;
+                    case 'ArrowRight': next = x + step; break;
+                    case 'ArrowUp':    next = x + (rtl ? -step : step); break;
+                    case 'ArrowDown':  next = x - (rtl ? -step : step); break;
+                    case 'PageUp':     next = x + (rtl ? -10 : 10); break;
+                    case 'PageDown':   next = x - (rtl ? -10 : 10); break;
+                    case 'Home':       next = rtl ? 100 : 0; break;
+                    case 'End':        next = rtl ? 0 : 100; break;
+                }
+                if (next === null) return;
+                e.preventDefault();
+                interacted();
+                set(next);
+            });
+
+            // One gentle nudge when a case first scrolls into view: shows it's interactive.
+            function nudge() {
+                if (touched) return;
+                var t0 = performance.now(), dur = 1400;
+                (function tick(now) {
+                    var t = Math.min(1, (now - t0) / dur);
+                    set(50 + 12 * Math.sin(t * Math.PI * 2));
+                    nudgeRaf = t < 1 ? requestAnimationFrame(tick) : 0;
+                })(t0);
+            }
+            if (!reduce && 'IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (entries) {
+                    if (!entries[0].isIntersecting) return;
+                    io.disconnect();
+                    setTimeout(nudge, 500 + idx * 250);
+                }, { threshold: 0.7 });
+                io.observe(frame);
+            }
+
+            render();
+        });
+    })();
+    </script>
 </section>

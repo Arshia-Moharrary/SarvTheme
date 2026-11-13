@@ -12,7 +12,7 @@ if (! defined('ABSPATH')) {
 ?>
 
 <!-- نوار شناور پایینی (Features Bar) -->
-<section id="features" class="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:-mt-58 -mt-50 reveal-up delay-200">
+<section id="features" class="relative z-20 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 lg:-mt-38 -mt-30 reveal-up delay-200">
 
     <!-- دکمه اسکرول مرکزی -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">

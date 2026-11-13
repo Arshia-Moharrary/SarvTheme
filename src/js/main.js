@@ -95,6 +95,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
+    // Desktop Header — Scroll State
+    // (CSS effects are scoped to @media (min-width: 1024px))
+    // ==========================================
+    const siteHeader = document.getElementById('masthead');
+    if (siteHeader) {
+        const SCROLL_THRESHOLD = 0;
+        let headerTicking = false;
+
+        const updateHeaderState = () => {
+            siteHeader.classList.toggle('is-scrolled', window.scrollY > SCROLL_THRESHOLD);
+            headerTicking = false;
+        };
+
+        window.addEventListener('scroll', () => {
+            if (!headerTicking) {
+                window.requestAnimationFrame(updateHeaderState);
+                headerTicking = true;
+            }
+        }, { passive: true });
+
+        // Initial state (e.g., landing on an anchor deep-link)
+        updateHeaderState();
+    }
+
+    // ==========================================
     // Smooth Scroll for Anchor Links
     // ==========================================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {

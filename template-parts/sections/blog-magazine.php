@@ -11,7 +11,7 @@ if (! defined('ABSPATH')) {
 }
 ?>
 
-<section id="magazine" class="py-24 bg-white relative overflow-hidden">
+<section id="magazine" class="py-24 relative overflow-hidden">
 
     <!-- المان تزئینی پس‌زمینه -->
     <div class="absolute top-0 start-0 w-64 h-64 bg-warm-ivory opacity-50 rounded-br-full pointer-events-none"></div>
