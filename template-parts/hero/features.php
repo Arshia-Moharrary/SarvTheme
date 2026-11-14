@@ -16,7 +16,7 @@ if (! defined('ABSPATH')) {
 
     <!-- دکمه اسکرول مرکزی -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
-        <a href="#next-section" class="w-12 h-12 bg-deep-emerald border-4 border-warm-ivory rounded-full flex items-center justify-center shadow-lg text-champagne-gold hover:bg-champagne-gold hover:text-deep-emerald transition-colors duration-300 group" aria-label="اسکرول به بخش بعدی">
+        <a href="#veneer-showcase" class="w-12 h-12 bg-deep-emerald border-4 border-warm-ivory rounded-full flex items-center justify-center shadow-lg text-champagne-gold hover:bg-champagne-gold hover:text-deep-emerald transition-colors duration-300 group" aria-label="اسکرول به بخش بعدی">
             <svg class="w-6 h-6 transform group-hover:translate-y-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
             </svg>

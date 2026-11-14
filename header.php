@@ -101,7 +101,7 @@ if (! defined('ABSPATH')) {
                             <a href="<?php echo esc_url(home_url('/')); ?>" class="block" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
                                 <div class="logo-badge w-20 h-20 lg:w-24 lg:h-24 xl:w-28 xl:h-28 rounded-full bg-white p-1 ring-1 ring-champagne-gold/40 shadow-[0_12px_32px_-8px_rgba(8,42,36,0.28)] hover:ring-champagne-gold hover:shadow-[0_16px_40px_-8px_rgba(8,42,36,0.36)] transition-all duration-500">
                                     <div class="w-full h-full rounded-full overflow-hidden bg-warm-ivory">
-                                        <img class="w-full h-full object-cover" src="<?php echo esc_url(get_template_directory_uri() . '/src/images/logo/logo.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                                        <img class="w-full h-full object-cover" src="<?php echo esc_url(get_template_directory_uri() . '/src/images/logo/logo3.jpg'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
                                         <?php
                                         // when real logo is set in dashboard:
                                         // if ( has_custom_logo() ) { the_custom_logo(); }
