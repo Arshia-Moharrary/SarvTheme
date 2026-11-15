@@ -1153,3 +1153,45 @@ button:focus-visible {
         animation: none !important;
     }
 }
+
+/* =========================================
+   Floating Contact Widget
+   ========================================= */
+
+/* Mobile-only initial hidden state */
+@media (max-width: 767px) {
+    #floating-contact .contact-actions {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(1rem);
+    }
+
+    /* Reveal state */
+    #floating-contact.is-open .contact-actions {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    /* Icon swap animation */
+    #floating-contact.is-open #fc-icon-chat {
+        opacity: 0;
+        transform: scale(50%) rotate(-90deg);
+    }
+
+    #floating-contact.is-open #fc-icon-close {
+        opacity: 1;
+        transform: scale(100%) rotate(0deg);
+    }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+    #floating-contact .contact-actions,
+    #floating-contact .contact-actions a,
+    #floating-contact #fc-icon-chat,
+    #floating-contact #fc-icon-close {
+        transition: none !important;
+    }
+}
