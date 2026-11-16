@@ -19,9 +19,9 @@ if (! defined('ABSPATH')) {
     <!-- ========================================== -->
     <div class="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="bg-deep-emerald rounded-[2.5rem] p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-2xl">
-            <div class="flex gap-10">
+            <div class="flex md:flex-row flex-col gap-10">
                 <!-- لوگو (سمت راست در RTL - شروع) -->
-                <div class="w-full md:w-fit flex justify-center md:justify-start shrink-0 border-l border-white/15 pl-10">
+                <div class="w-full md:w-fit flex justify-center md:justify-start shrink-0 border-b md:border-l md:border-b-transparent border-white/15 md:pl-10 md:pb-0 pb-10">
                     <div class="flex flex-col items-center text-warm-ivory">
                         <!-- <svg class="w-12 h-12 mb-6 text-warm-ivory" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
@@ -298,7 +298,7 @@ if (! defined('ABSPATH')) {
             <!-- ========================================== -->
 
             <!-- Back to Top Button -->
-            <a href="#" id="back-to-top" aria-label="بازگشت به بالا" class="absolute bottom-20 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 w-14 h-14 bg-champagne-gold text-deep-emerald rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(200,165,106,0.4)] hover:bg-warm-ivory hover:text-deep-emerald hover:-translate-y-1 transition-all duration-300 group">
+            <a href="#" id="back-to-top" aria-label="بازگشت به بالا" class="hidden absolute bottom-20 left-1/2 -translate-x-1/2 translate-y-1/2 z-30 w-14 h-14 bg-champagne-gold text-deep-emerald rounded-full md:flex items-center justify-center shadow-[0_8px_24px_rgba(200,165,106,0.4)] hover:bg-warm-ivory hover:text-deep-emerald hover:-translate-y-1 transition-all duration-300 group">
                 <svg class="w-6 h-6 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
                 </svg>

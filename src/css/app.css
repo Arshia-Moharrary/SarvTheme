@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "./fonts.css";
 
+@source "../**/*.php";
+
 @theme {
     /* =========================================
      1. Colors (Brand Identity)
