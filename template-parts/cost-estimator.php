@@ -4,13 +4,15 @@
  * Treatment cost estimator → consultation request.
  *
  * Usage:  get_template_part('template-parts/cost-estimator');
- * Needs:  inc/estimator.php loaded from functions.php (lead storage + AJAX endpoint),
+ * Needs:  the "Sarv Leads" plugin (lead storage, REST API, Telegram, admin),
  *         src/js/cost-estimator.js, and the CSS from estimator-additions.css.
  */
 
 defined('ABSPATH') || exit;
 
-$sarv_range = function_exists('sarv_estimator_teeth_range') ? sarv_estimator_teeth_range() : [1, 32];
+// Public, non-secret settings from the Sarv Leads plugin (REST base URL + nonce). Nothing else reaches the browser.
+$sarv_cfg   = function_exists('sarv_leads_frontend_config') ? sarv_leads_frontend_config() : ['rest' => '', 'nonce' => '', 'min' => 1, 'max' => 32];
+$sarv_range = [(int) $sarv_cfg['min'], (int) $sarv_cfg['max']];
 $sarv_quick = [8, 10, 12, 16, 20];                       // predefined quantities
 $sarv_fa    = static function ($n) {
     return strtr((string) $n, ['0' => '۰', '1' => '۱', '2' => '۲', '3' => '۳', '4' => '۴', '5' => '۵', '6' => '۶', '7' => '۷', '8' => '۸', '9' => '۹']);
@@ -50,9 +52,8 @@ wp_enqueue_script(
     aria-labelledby="estimator-title"
     class="relative bg-warm-ivory text-charcoal py-20 lg:py-28"
     data-estimator
-    data-endpoint="<?php echo esc_url(admin_url('admin-ajax.php')); ?>"
-    data-action="sarv_estimator_submit"
-    data-nonce="<?php echo esc_attr(wp_create_nonce('sarv_estimator')); ?>"
+    data-rest="<?php echo esc_url($sarv_cfg['rest']); ?>"
+    data-nonce="<?php echo esc_attr($sarv_cfg['nonce']); ?>"
     data-min="<?php echo (int) $sarv_range[0]; ?>"
     data-max="<?php echo (int) $sarv_range[1]; ?>">
 
@@ -65,6 +66,12 @@ wp_enqueue_script(
                 </h2>
                 <p class="text-body-range text-warm-ivory/80 font-peyda leading-relaxed">
                     نوع درمان و تعداد دندان‌ها را مشخص کنید تا مشاوران ما قیمت دقیق را متناسب با نیاز شما اعلام کنند.
+                </p>
+                <p class="mt-4 flex items-start gap-2 text-caption font-peyda text-warm-ivory/70 leading-relaxed">
+                    <svg class="w-4 h-4 mt-0.5 shrink-0 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.1.9-2 2-2s2 .9 2 2v1H12v-1zm-5 1V9a5 5 0 0110 0v3m-12 0h14v8H5v-8z"></path>
+                    </svg>
+                    <span>انتخاب‌های شما برای پیگیری مشاوره ذخیره می‌شود و تیم ما از طریق تلگرام از آن مطلع می‌شود. شماره تماس شما فقط پس از تأیید موافقت‌تان ثبت می‌شود.</span>
                 </p>
             </header>
 
@@ -228,6 +235,15 @@ wp_enqueue_script(
                                                 </span>
                                             </div>
                                             <p id="est-phone-msg" class="est-msg" data-phone-msg aria-live="polite"></p>
+                                        </div>
+
+                                        <!-- Explicit consent: the phone number is not transmitted until this is ticked -->
+                                        <div class="mt-5">
+                                            <label class="est-consent">
+                                                <input type="checkbox" name="consent" value="1" data-consent aria-describedby="est-consent-msg">
+                                                <span>با ذخیره اطلاعات من برای پیگیری مشاوره و اطلاع‌رسانی به تیم مشاوره از طریق تلگرام موافقم.</span>
+                                            </label>
+                                            <p id="est-consent-msg" class="est-msg" data-consent-msg aria-live="polite"></p>
                                         </div>
 
                                         <!-- Honeypot: humans never see or fill this -->

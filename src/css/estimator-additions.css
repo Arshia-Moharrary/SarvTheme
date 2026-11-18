@@ -1,0 +1,311 @@
+/* =========================================
+   Cost estimator
+   Append to app.css. Uses only existing brand tokens.
+   ========================================= */
+
+:root {
+    /* The design system has no error colour. Swap this for a dedicated token if you add one;
+       errors are also always shown with an icon + text, never colour alone. */
+    --est-error: var(--color-champagne-gold);
+}
+
+@layer components {
+
+    /* Dark button for light surfaces (the revealed consultation card) */
+    .btn-dark {
+        @apply bg-deep-emerald text-warm-ivory hover:bg-forest-noir shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+    }
+
+    /* ----- Step headings ----- */
+    .est-step {
+        @apply flex items-center gap-3 p-0 text-h4 font-bold font-peyda;
+    }
+
+    .est-step__num {
+        @apply inline-flex items-center justify-center w-8 h-8 shrink-0 rounded-full bg-champagne-gold text-deep-emerald text-body font-bold;
+    }
+
+    .est-tag {
+        @apply inline-flex items-center px-3 py-0.5 rounded-full border border-warm-ivory/25 text-caption font-medium font-peyda text-warm-ivory/80;
+    }
+
+    /* ----- Treatment cards (native radio underneath: arrow keys + focus for free) ----- */
+    .est-card {
+        @apply relative flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 min-h-28 px-2 py-5 sm:px-5 rounded-brand border border-warm-ivory/15 bg-warm-ivory/5 text-warm-ivory font-peyda font-bold cursor-pointer select-none transition-all duration-300 hover:border-champagne-gold/60 hover:bg-warm-ivory/10 active:scale-95;
+    }
+
+    .est-card__icon {
+        @apply w-9 h-9 sm:w-10 sm:h-10 shrink-0 text-champagne-gold transition-colors duration-300;
+    }
+
+    .est-card__check {
+        @apply absolute top-2 end-2 w-5 h-5 rounded-full bg-deep-emerald text-champagne-gold flex items-center justify-center opacity-0 scale-50 transition-all duration-300;
+    }
+
+    .est-radio:checked+.est-card {
+        @apply bg-warm-ivory text-deep-emerald border-champagne-gold shadow-xl;
+    }
+
+    .est-radio:checked+.est-card .est-card__icon {
+        @apply text-deep-emerald;
+    }
+
+    .est-radio:checked+.est-card .est-card__check {
+        @apply opacity-100 scale-100;
+    }
+
+    .est-radio:focus-visible+.est-card {
+        @apply ring-2 ring-champagne-gold ring-offset-2 ring-offset-deep-emerald;
+    }
+
+    /* ----- Quantity chips & small controls ----- */
+    .est-chip {
+        @apply inline-flex items-center justify-center gap-1.5 h-12 min-w-20 px-5 rounded-brand border border-warm-ivory/20 bg-warm-ivory/5 text-warm-ivory font-peyda font-bold transition-all duration-300 hover:border-champagne-gold/60 hover:bg-warm-ivory/10 active:scale-95;
+    }
+
+    .est-chip[aria-pressed='true'] {
+        @apply bg-champagne-gold border-champagne-gold text-deep-emerald;
+    }
+
+    .est-mini {
+        @apply inline-flex items-center h-10 px-4 rounded-full border border-warm-ivory/20 text-caption font-bold font-peyda text-warm-ivory transition-colors duration-300 hover:border-champagne-gold/60 hover:bg-warm-ivory/10;
+    }
+
+    .est-mini[aria-pressed='true'] {
+        @apply bg-champagne-gold border-champagne-gold text-deep-emerald;
+    }
+
+    .est-mini:disabled {
+        @apply opacity-40 cursor-not-allowed hover:bg-transparent hover:border-warm-ivory/20;
+    }
+
+    /* ----- Inputs ----- */
+    .est-field {
+        @apply w-full h-12 px-4 rounded-brand border border-warm-ivory/20 bg-warm-ivory/5 text-warm-ivory font-peyda font-bold text-body outline-none transition-colors duration-300 placeholder:text-warm-ivory/40 placeholder:font-normal focus:border-champagne-gold focus:ring-2 focus:ring-champagne-gold/40;
+    }
+
+    .est-field[aria-invalid='true'] {
+        border-color: var(--est-error);
+    }
+
+    .est-field--light {
+        @apply h-14 bg-white border-soft-stone text-deep-emerald text-body-range placeholder:text-charcoal/40 focus:border-deep-emerald focus:ring-deep-emerald/20;
+        padding-inline-end: 3rem;
+        /* room for the valid tick */
+    }
+
+    .est-field--light[aria-invalid='true'] {
+        @apply border-deep-emerald ring-2 ring-deep-emerald/30;
+    }
+
+    .est-valid {
+        @apply absolute top-1/2 -translate-y-1/2 end-4 text-deep-emerald opacity-0 scale-50 transition-all duration-300 pointer-events-none;
+    }
+
+    .is-valid .est-valid {
+        @apply opacity-100 scale-100;
+    }
+
+    /* ----- Messages (fixed height → no layout shift when they appear) ----- */
+    .est-msg {
+        @apply flex items-center gap-2 h-6 mt-1 text-caption font-bold font-peyda;
+        color: var(--est-error);
+    }
+
+    .est-msg:not(:empty)::before {
+        content: '!';
+        @apply inline-flex items-center justify-center w-4 h-4 shrink-0 rounded-full border border-current text-[0.65rem] leading-none;
+    }
+
+    .est-msg--block {
+        @apply h-auto mt-4 mb-2 py-3 px-4 rounded-brand border border-deep-emerald/30 bg-deep-emerald/5 text-deep-emerald;
+    }
+
+    .est-lead-card .est-msg,
+    #est-lead .est-msg {
+        color: var(--color-deep-emerald);
+    }
+
+    /* ----- Mode-change notice with undo ----- */
+    .est-notice {
+        @apply mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 rounded-brand border border-champagne-gold/40 bg-champagne-gold/10 text-caption font-peyda text-warm-ivory;
+    }
+
+    .est-notice__undo {
+        @apply font-bold text-champagne-gold underline underline-offset-4 hover:text-warm-ivory;
+    }
+}
+
+/* ----- Dental arch ----- */
+.est-arch {
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    /* tap = select, no double-tap zoom delay */
+}
+
+.est-gum {
+    fill: none;
+    stroke: var(--color-warm-ivory);
+    stroke-opacity: 0.06;
+    stroke-width: 38;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.est-arch__label {
+    fill: var(--color-warm-ivory);
+    fill-opacity: 0.4;
+    font-family: var(--font-peyda);
+    font-size: 12px;
+    font-weight: 700;
+    pointer-events: none;
+}
+
+.est-tooth {
+    cursor: pointer;
+    outline: none;
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.est-tooth__shape {
+    fill: color-mix(in srgb, var(--color-warm-ivory) 10%, transparent);
+    stroke: color-mix(in srgb, var(--color-warm-ivory) 55%, transparent);
+    stroke-width: 1.25;
+    transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.est-tooth__line {
+    fill: none;
+    stroke: color-mix(in srgb, var(--color-warm-ivory) 30%, transparent);
+    stroke-width: 1;
+    pointer-events: none;
+}
+
+.est-tooth:hover .est-tooth__shape {
+    fill: color-mix(in srgb, var(--color-warm-ivory) 26%, transparent);
+    stroke: var(--color-warm-ivory);
+}
+
+.est-tooth[aria-checked='true'] {
+    transform: scale(1.06);
+}
+
+.est-tooth[aria-checked='true'] .est-tooth__shape {
+    fill: var(--color-champagne-gold);
+    stroke: var(--color-warm-ivory);
+    stroke-width: 1.5;
+}
+
+.est-tooth[aria-checked='true'] .est-tooth__line {
+    stroke: color-mix(in srgb, var(--color-deep-emerald) 45%, transparent);
+}
+
+.est-tooth:focus-visible .est-tooth__shape {
+    stroke: var(--color-warm-ivory);
+    stroke-width: 3.5;
+}
+
+/* ----- Step reveal: animates 0fr → 1fr, no height measuring, no layout jump ----- */
+.est-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out;
+}
+
+.est-reveal.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+}
+
+.est-reveal__inner {
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* ----- Success check + gentle shake for guidance ----- */
+.est-check {
+    stroke-dasharray: 32;
+    stroke-dashoffset: 32;
+    animation: est-draw 0.7s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes est-draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.is-shaking {
+    animation: est-shake 0.4s ease-in-out;
+}
+
+@keyframes est-shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-4px);
+    }
+
+    75% {
+        transform: translateX(4px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .est-reveal,
+    .est-card,
+    .est-card__check,
+    .est-chip,
+    .est-tooth,
+    .est-tooth__shape,
+    .est-valid {
+        transition: none !important;
+    }
+
+    .est-check {
+        animation: none !important;
+        stroke-dashoffset: 0;
+    }
+
+    .is-shaking {
+        animation: none !important;
+    }
+}
+
+/* ----- Consent checkbox (revealed consultation card) ----- */
+.est-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-family: var(--font-peyda);
+    font-size: var(--text-caption);
+    line-height: 1.7;
+    color: var(--color-deep-emerald);
+}
+
+.est-consent input {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-top: 0.15rem;
+    accent-color: var(--color-deep-emerald);
+    cursor: pointer;
+}
+
+.est-consent input:focus-visible {
+    outline: 2px solid var(--color-deep-emerald);
+    outline-offset: 2px;
+}
