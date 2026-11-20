@@ -301,3 +301,4 @@ add_action( 'customize_register', 'sarv_customize_about_settings' );
 
 require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/contact-submissions.php';
+require_once get_template_directory() . '/inc/blog-helpers.php';
