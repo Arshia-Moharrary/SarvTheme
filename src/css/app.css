@@ -1257,6 +1257,36 @@ button:focus-visible {
     .sarv-share__toast.is-visible {
         @apply opacity-100;
     }
+
+    /* Reading progress — thin line at viewport bottom */
+    .sarv-reading-progress {
+        position: fixed;
+        inset-block-end: 0;
+        inset-inline: 0;
+        height: 4px;
+        background: transparent;
+        z-index: 60;
+        pointer-events: none;
+    }
+
+    .sarv-reading-progress[hidden] {
+        display: none;
+    }
+
+    .sarv-reading-progress__fill {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: var(--color-champagne-gold);
+        transform: scaleX(var(--sarv-progress, 0));
+        transform-origin: right center;
+        transition: transform 0.12s linear;
+        will-change: transform;
+    }
+
+    [dir="ltr"] .sarv-reading-progress__fill {
+        transform-origin: left center;
+    }
 }
 
 .sarv-article-layout.has-toc {
@@ -1576,6 +1606,10 @@ button:focus-visible {
     .sarv-share__btn,
     .sarv-article-toc__link,
     .sarv-share__toast {
+        transition: none !important;
+    }
+
+    .sarv-reading-progress__fill {
         transition: none !important;
     }
 }

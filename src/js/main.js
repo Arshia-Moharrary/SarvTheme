@@ -400,4 +400,52 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
+
+    // ==========================================
+    // Single Article — Reading Progress
+    // ==========================================
+    const readingProgress = document.querySelector('[data-sarv-reading-progress]');
+    const readingProgressFill = readingProgress?.querySelector('.sarv-reading-progress__fill');
+    const readingArticle = document.querySelector('[data-sarv-article-content]');
+
+    if (readingProgress && readingProgressFill && readingArticle) {
+        let progressTicking = false;
+
+        const updateReadingProgress = () => {
+            const rect = readingArticle.getBoundingClientRect();
+            const articleHeight = rect.height;
+            const viewportHeight = window.innerHeight;
+
+            // Hide for very short articles — progress indicator is meaningless
+            if (articleHeight < viewportHeight * 0.6) {
+                readingProgress.hidden = true;
+                progressTicking = false;
+                return;
+            }
+
+            readingProgress.hidden = false;
+
+            // Progress = 0 when article top reaches 80% of viewport,
+            //            = 1 when article bottom reaches 20% of viewport.
+            const startOffset = viewportHeight * 0.8;
+            const endOffset = viewportHeight * 0.2;
+            const readingDistance = articleHeight + startOffset - endOffset;
+            const readSoFar = startOffset - rect.top;
+
+            const progress = Math.max(0, Math.min(1, readSoFar / readingDistance));
+            readingProgressFill.style.setProperty('--sarv-progress', progress.toFixed(3));
+            progressTicking = false;
+        };
+
+        const onReadingScroll = () => {
+            if (!progressTicking) {
+                window.requestAnimationFrame(updateReadingProgress);
+                progressTicking = true;
+            }
+        };
+
+        window.addEventListener('scroll', onReadingScroll, { passive: true });
+        window.addEventListener('resize', onReadingScroll, { passive: true });
+        updateReadingProgress();
+    }
 });

@@ -1,5 +1,5 @@
 <?php
-/**
+    /**
  * Single Article.
  *
  * Premium editorial reading experience for default WordPress posts.
@@ -34,6 +34,11 @@
 ?>
 
     <div class="bg-warm-ivory sarv-single-body">
+
+        <div class="sarv-reading-progress" data-sarv-reading-progress aria-hidden="true">
+            <span class="sarv-reading-progress__fill"></span>
+        </div>
+
         <section class="pt-10 pb-20 md:pt-14 md:pb-28">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="sarv-article-layout <?php echo $has_toc ? 'has-toc' : 'no-toc'; ?>">
