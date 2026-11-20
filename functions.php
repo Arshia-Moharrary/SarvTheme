@@ -314,3 +314,5 @@ require_once get_template_directory() . '/inc/portfolio-cpt.php';
 require_once get_template_directory() . '/inc/portfolio-meta.php';
 require_once get_template_directory() . '/inc/portfolio-page.php';
 require_once get_template_directory() . '/inc/portfolio-ajax.php';
+require_once get_template_directory() . '/inc/composite-helpers.php';
+require_once get_template_directory() . '/inc/composite-page.php';

@@ -1,0 +1,92 @@
+<?php
+    /**
+ * Composite Service Page.
+ *
+ * @package Sarv
+ */
+
+    defined('ABSPATH') || exit;
+
+    get_header();
+
+    $page_id = (int) get_the_ID();
+
+    if (have_posts()):
+    the_post();
+    endif;
+
+    $sections = sarv_composite_sections($page_id);
+
+    $hero     = isset($sections[0]) ? sarv_composite_hero($sections[0]) : [];
+    $stats    = isset($sections[1]) ? sarv_composite_stats($sections[1]) : [];
+    $process  = isset($sections[2]) ? sarv_composite_process($sections[2]) : [];
+    $bafg_ids = isset($sections[3]) ? sarv_composite_bafg_ids($sections[3]) : [];
+    $videos   = isset($sections[3]) ? sarv_composite_videos($sections[3]) : [];
+    $gf_id    = isset($sections[4]) ? sarv_composite_gravityform_id($sections[4]) : 0;
+    $long_raw = $sections[5] ?? '';
+    $faq      = isset($sections[6]) ? sarv_composite_faq($sections[6]) : [];
+
+    /* Resolve bafg pairs. */
+    $bafg_pairs = [];
+    foreach ($bafg_ids as $id) {
+    $pair = sarv_bafg_pair($id);
+    if ($pair) {
+        $bafg_pairs[] = $pair;
+    }
+
+    }
+
+    /* Case titles for before/after — use plain labels rather than fake meta. */
+    $bafg_cases = [];
+    foreach ($bafg_pairs as $i => $pair) {
+    $bafg_cases[] = [
+        'title'         => sprintf('نمونه کامپوزیت %s', number_format_i18n($i + 1)),
+        'description'   => '',
+        'before'        => $pair['before'],
+        'after'         => $pair['after'],
+        'before_width'  => 1000,
+        'before_height' => 1000,
+        'meta'          => [],
+    ];
+    }
+?>
+
+<main id="primary" class="bg-warm-ivory sarv-composite-page">
+
+    <?php get_template_part('template-parts/composite/hero', null, ['hero' => $hero]); ?>
+
+    <?php get_template_part('template-parts/composite/stats', null, ['stats' => $stats]); ?>
+
+    <?php get_template_part('template-parts/composite/process', null, ['process' => $process]); ?>
+
+    <?php if (! empty($bafg_cases)):
+            get_template_part('template-parts/sections/before-after-compare', null, [
+                'section_id' => 'composite-before-after',
+                'title'      => 'نتایج کامپوزیت در کلینیک سرو',
+                'intro'      => 'نمونه‌های واقعی کامپوزیت انجام‌شده در کلینیک سرو. برای مقایسه، دستگیره را بکشید.',
+                'hint'       => 'برای مقایسه، دستگیره را بکشید',
+                'cases'      => $bafg_cases,
+            ]);
+    endif; ?>
+
+    <?php if (! empty($videos)): ?>
+        <?php get_template_part('template-parts/composite/videos', null, ['videos' => $videos]); ?>
+    <?php endif; ?>
+
+    <?php if ($gf_id > 0): ?>
+        <?php get_template_part('template-parts/composite/form', null, ['form_id' => $gf_id]); ?>
+    <?php endif; ?>
+
+    <?php if (trim($long_raw) !== ''): ?>
+        <?php get_template_part('template-parts/composite/long-content', null, ['raw' => $long_raw]); ?>
+    <?php endif; ?>
+
+    <?php if (! empty($faq)): ?>
+        <?php get_template_part('template-parts/composite/faq', null, ['items' => $faq]); ?>
+    <?php endif; ?>
+
+    <?php get_template_part('template-parts/composite/cta'); ?>
+
+</main>
+
+<?php get_footer(); ?>

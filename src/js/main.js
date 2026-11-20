@@ -675,4 +675,108 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
+
+    // ==========================================
+    // Before / After Comparison Sliders
+    // Scoped: [data-compare]. Multiple instances supported.
+    // ==========================================
+    (function initBeforeAfterComparison() {
+        const frames = document.querySelectorAll('[data-compare]');
+        if (!frames.length) return;
+
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const nf = new Intl.NumberFormat('fa-IR');
+
+        frames.forEach((frame, idx) => {
+            const handle = frame.querySelector('[data-handle]');
+            if (!handle) return;
+
+            const rtl = frame.classList.contains('veneer-compare--rtl');
+            let x = 50;
+            let raf = 0, nudgeRaf = 0, dragging = false, offset = 0, touched = false;
+
+            function render() {
+                raf = 0;
+                frame.style.setProperty('--x', x.toFixed(2));
+                const before = Math.round(rtl ? 100 - x : x);
+                handle.setAttribute('aria-valuenow', before);
+                handle.setAttribute('aria-valuetext', 'قبل ' + nf.format(before) + '٪ — بعد ' + nf.format(100 - before) + '٪');
+            }
+            function set(v) {
+                x = Math.min(100, Math.max(0, v));
+                if (!raf) raf = requestAnimationFrame(render);
+            }
+            function xFromEvent(e) {
+                const r = frame.getBoundingClientRect();
+                return ((e.clientX - r.left) / r.width) * 100;
+            }
+            function interacted() {
+                touched = true;
+                if (nudgeRaf) { cancelAnimationFrame(nudgeRaf); nudgeRaf = 0; }
+            }
+
+            frame.addEventListener('pointerdown', (e) => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                const onHandle = !!e.target.closest('[data-handle]');
+                if (e.pointerType !== 'mouse' && !onHandle) return;
+                interacted();
+                dragging = true;
+                offset = onHandle ? xFromEvent(e) - x : 0;
+                frame.setPointerCapture(e.pointerId);
+                frame.classList.add('is-dragging');
+                if (!onHandle) set(xFromEvent(e));
+            });
+            frame.addEventListener('pointermove', (e) => {
+                if (dragging) set(xFromEvent(e) - offset);
+            });
+            function end(e) {
+                if (!dragging) return;
+                dragging = false;
+                frame.classList.remove('is-dragging');
+                try { frame.releasePointerCapture(e.pointerId); } catch (err) { }
+            }
+            frame.addEventListener('pointerup', end);
+            frame.addEventListener('pointercancel', end);
+            frame.addEventListener('dragstart', (e) => e.preventDefault());
+
+            handle.addEventListener('keydown', (e) => {
+                const step = e.shiftKey ? 10 : 2;
+                let next = null;
+                switch (e.key) {
+                    case 'ArrowLeft': next = x - step; break;
+                    case 'ArrowRight': next = x + step; break;
+                    case 'ArrowUp': next = x + (rtl ? -step : step); break;
+                    case 'ArrowDown': next = x - (rtl ? -step : step); break;
+                    case 'PageUp': next = x + (rtl ? -10 : 10); break;
+                    case 'PageDown': next = x - (rtl ? -10 : 10); break;
+                    case 'Home': next = rtl ? 100 : 0; break;
+                    case 'End': next = rtl ? 0 : 100; break;
+                }
+                if (next === null) return;
+                e.preventDefault();
+                interacted();
+                set(next);
+            });
+
+            function nudge() {
+                if (touched) return;
+                const t0 = performance.now(), dur = 1400;
+                (function tick(now) {
+                    const t = Math.min(1, (now - t0) / dur);
+                    set(50 + 12 * Math.sin(t * Math.PI * 2));
+                    nudgeRaf = t < 1 ? requestAnimationFrame(tick) : 0;
+                })(t0);
+            }
+            if (!reduce && 'IntersectionObserver' in window) {
+                const io = new IntersectionObserver((entries) => {
+                    if (!entries[0].isIntersecting) return;
+                    io.disconnect();
+                    setTimeout(nudge, 500 + idx * 250);
+                }, { threshold: 0.7 });
+                io.observe(frame);
+            }
+
+            render();
+        });
+    })();
 });

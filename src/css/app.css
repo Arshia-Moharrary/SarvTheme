@@ -1875,3 +1875,84 @@ button:focus-visible {
         transition: none !important;
     }
 }
+
+/* =========================================
+   Composite Service Page
+   Uses only existing brand tokens.
+   ========================================= */
+
+@layer components {
+
+    /* Gravity Forms scoped styling — only inside .sarv-gf-scope */
+    .sarv-gf-scope .gform_wrapper {
+        @apply font-peyda;
+    }
+
+    .sarv-gf-scope .gform_wrapper form {
+        @apply flex flex-col gap-5;
+    }
+
+    .sarv-gf-scope .gform_fields {
+        @apply grid grid-cols-1 gap-5 !important;
+    }
+
+    .sarv-gf-scope .gfield {
+        @apply w-full;
+    }
+
+    .sarv-gf-scope .gfield_label {
+        @apply block text-caption font-bold text-charcoal/70 font-peyda mb-2;
+    }
+
+    .sarv-gf-scope input[type="text"],
+    .sarv-gf-scope input[type="tel"],
+    .sarv-gf-scope input[type="email"],
+    .sarv-gf-scope textarea {
+        @apply w-full px-4 py-3 rounded-brand border border-soft-stone bg-warm-ivory/50 text-charcoal text-body font-peyda outline-none transition-colors duration-200 focus:border-deep-emerald focus:ring-2 focus:ring-deep-emerald/20 !important;
+    }
+
+    .sarv-gf-scope textarea {
+        @apply min-h-[7rem] resize-y;
+    }
+
+    .sarv-gf-scope .gform_button,
+    .sarv-gf-scope .gform_footer input[type="submit"] {
+        @apply w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-deep-emerald text-warm-ivory px-8 py-3.5 rounded-brand font-peyda font-bold text-body cursor-pointer transition-all duration-300 hover:bg-forest-noir hover:-translate-y-0.5 !important;
+    }
+
+    .sarv-gf-scope .validation_message {
+        @apply text-caption font-bold text-charcoal/70 mt-1;
+    }
+
+    .sarv-gf-scope .gfield_error input,
+    .sarv-gf-scope .gfield_error textarea {
+        @apply border-deep-emerald;
+    }
+
+    .sarv-gf-scope .gform_confirmation_message {
+        @apply p-5 rounded-brand bg-deep-emerald/5 border border-deep-emerald/30 text-deep-emerald font-peyda font-bold text-center;
+    }
+}
+
+/* FAQ open animation (details/summary) */
+details.sarv-faq>summary::-webkit-details-marker {
+    display: none;
+}
+
+details.sarv-faq>summary::marker {
+    content: '';
+}
+
+details.sarv-faq[open]>summary {
+    @apply pb-3;
+}
+
+details.sarv-faq[open] .sarv-faq__icon {
+    @apply rotate-180;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    details.sarv-faq .sarv-faq__icon {
+        transition: none !important;
+    }
+}
