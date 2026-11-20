@@ -23,7 +23,7 @@
                 <span class="text-champagne-gold font-bold font-peyda text-caption tracking-widest uppercase">مراحل درمان</span>
             </div>
             <h2 class="text-h2 md:text-h1 font-black text-deep-emerald leading-tight font-peyda">
-                روند انجام کامپوزیت دندان
+                روند انجام کار
             </h2>
         </header>
 

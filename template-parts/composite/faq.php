@@ -8,6 +8,7 @@
 defined('ABSPATH') || exit;
 
 $items = $args['items'] ?? [];
+$title = (string) ($args['title'] ?? 'پاسخ به پرسش‌های شما');
 if (empty($items)) return;
 ?>
 
@@ -21,7 +22,7 @@ if (empty($items)) return;
                 <span class="w-8 h-px bg-champagne-gold"></span>
             </div>
             <h2 class="text-h2 md:text-h1 font-black text-deep-emerald leading-tight font-peyda">
-                پاسخ به پرسش‌های شما
+               <?php echo esc_html($title); ?>
             </h2>
         </header>
 

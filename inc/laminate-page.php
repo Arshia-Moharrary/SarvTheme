@@ -1,0 +1,16 @@
+<?php
+/**
+ * Laminate service page routing.
+ *
+ * @package Sarv
+ */
+
+defined('ABSPATH') || exit;
+
+add_filter('page_template', function (string $template): string {
+    if (is_page('services/laminate')) {
+        $custom = get_template_directory() . '/page-laminate.php';
+        if (file_exists($custom)) return $custom;
+    }
+    return $template;
+});

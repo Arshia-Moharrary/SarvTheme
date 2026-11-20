@@ -1876,83 +1876,120 @@ button:focus-visible {
     }
 }
 
-/* =========================================
-   Composite Service Page
-   Uses only existing brand tokens.
-   ========================================= */
+/* Gravity Forms scoped styling — only inside .sarv-gf-scope */
+.sarv-gf-scope .gform_wrapper {
+    font-family: var(--font-peyda);
+}
 
-@layer components {
+.sarv-gf-scope .gform_wrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
 
-    /* Gravity Forms scoped styling — only inside .sarv-gf-scope */
-    .sarv-gf-scope .gform_wrapper {
-        @apply font-peyda;
-    }
+.sarv-gf-scope .gform_fields {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 1.25rem !important;
+}
 
-    .sarv-gf-scope .gform_wrapper form {
-        @apply flex flex-col gap-5;
-    }
+.sarv-gf-scope .gfield {
+    width: 100%;
+}
 
-    .sarv-gf-scope .gform_fields {
-        @apply grid grid-cols-1 gap-5 !important;
-    }
+.sarv-gf-scope .gfield_label {
+    display: block;
+    font-family: var(--font-peyda);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: color-mix(in srgb, var(--color-charcoal) 70%, transparent);
+    margin-bottom: 0.5rem;
+}
 
-    .sarv-gf-scope .gfield {
-        @apply w-full;
-    }
+.sarv-gf-scope input[type="text"],
+.sarv-gf-scope input[type="tel"],
+.sarv-gf-scope input[type="email"],
+.sarv-gf-scope textarea {
+    width: 100% !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: var(--radius-brand) !important;
+    border: 1px solid var(--color-soft-stone) !important;
+    background-color: color-mix(in srgb, var(--color-warm-ivory) 50%, transparent) !important;
+    color: var(--color-charcoal) !important;
+    font-family: var(--font-peyda) !important;
+    font-size: 1rem !important;
+    line-height: 1.6 !important;
+    outline: none !important;
+    transition: border-color 0.2s, box-shadow 0.2s !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+}
 
-    .sarv-gf-scope .gfield_label {
-        @apply block text-caption font-bold text-charcoal/70 font-peyda mb-2;
-    }
+.sarv-gf-scope input[type="text"]:focus,
+.sarv-gf-scope input[type="tel"]:focus,
+.sarv-gf-scope input[type="email"]:focus,
+.sarv-gf-scope textarea:focus {
+    border-color: var(--color-deep-emerald) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-deep-emerald) 20%, transparent) !important;
+}
 
-    .sarv-gf-scope input[type="text"],
-    .sarv-gf-scope input[type="tel"],
-    .sarv-gf-scope input[type="email"],
-    .sarv-gf-scope textarea {
-        @apply w-full px-4 py-3 rounded-brand border border-soft-stone bg-warm-ivory/50 text-charcoal text-body font-peyda outline-none transition-colors duration-200 focus:border-deep-emerald focus:ring-2 focus:ring-deep-emerald/20 !important;
-    }
+.sarv-gf-scope textarea {
+    min-height: 7rem !important;
+    resize: vertical !important;
+}
 
-    .sarv-gf-scope textarea {
-        @apply min-h-[7rem] resize-y;
-    }
+.sarv-gf-scope .gform_button,
+.sarv-gf-scope .gform_footer input[type="submit"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+    padding: 0.875rem 2rem !important;
+    border-radius: var(--radius-brand) !important;
+    background-color: var(--color-deep-emerald) !important;
+    color: var(--color-warm-ivory) !important;
+    font-family: var(--font-peyda) !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    border: 0 !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s, transform 0.3s !important;
+}
+
+.sarv-gf-scope .gform_button:hover,
+.sarv-gf-scope .gform_footer input[type="submit"]:hover {
+    background-color: var(--color-forest-noir) !important;
+    transform: translateY(-1px) !important;
+}
+
+@media (min-width: 640px) {
 
     .sarv-gf-scope .gform_button,
     .sarv-gf-scope .gform_footer input[type="submit"] {
-        @apply w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-deep-emerald text-warm-ivory px-8 py-3.5 rounded-brand font-peyda font-bold text-body cursor-pointer transition-all duration-300 hover:bg-forest-noir hover:-translate-y-0.5 !important;
-    }
-
-    .sarv-gf-scope .validation_message {
-        @apply text-caption font-bold text-charcoal/70 mt-1;
-    }
-
-    .sarv-gf-scope .gfield_error input,
-    .sarv-gf-scope .gfield_error textarea {
-        @apply border-deep-emerald;
-    }
-
-    .sarv-gf-scope .gform_confirmation_message {
-        @apply p-5 rounded-brand bg-deep-emerald/5 border border-deep-emerald/30 text-deep-emerald font-peyda font-bold text-center;
+        width: auto !important;
     }
 }
 
-/* FAQ open animation (details/summary) */
-details.sarv-faq>summary::-webkit-details-marker {
-    display: none;
+.sarv-gf-scope .validation_message {
+    color: color-mix(in srgb, var(--color-charcoal) 70%, transparent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-top: 0.25rem;
 }
 
-details.sarv-faq>summary::marker {
-    content: '';
+.sarv-gf-scope .gfield_error input,
+.sarv-gf-scope .gfield_error textarea {
+    border-color: var(--color-deep-emerald) !important;
 }
 
-details.sarv-faq[open]>summary {
-    @apply pb-3;
-}
-
-details.sarv-faq[open] .sarv-faq__icon {
-    @apply rotate-180;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    details.sarv-faq .sarv-faq__icon {
-        transition: none !important;
-    }
+.sarv-gf-scope .gform_confirmation_message {
+    padding: 1.25rem;
+    border-radius: var(--radius-brand);
+    background-color: color-mix(in srgb, var(--color-deep-emerald) 5%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-deep-emerald) 30%, transparent);
+    color: var(--color-deep-emerald);
+    font-family: var(--font-peyda);
+    font-weight: 700;
+    text-align: center;
 }

@@ -15,16 +15,16 @@
     the_post();
     endif;
 
-    $sections = sarv_composite_sections($page_id);
+    $sections = sarv_service_sections($page_id);
 
-    $hero     = isset($sections[0]) ? sarv_composite_hero($sections[0]) : [];
-    $stats    = isset($sections[1]) ? sarv_composite_stats($sections[1]) : [];
-    $process  = isset($sections[2]) ? sarv_composite_process($sections[2]) : [];
-    $bafg_ids = isset($sections[3]) ? sarv_composite_bafg_ids($sections[3]) : [];
-    $videos   = isset($sections[3]) ? sarv_composite_videos($sections[3]) : [];
-    $gf_id    = isset($sections[4]) ? sarv_composite_gravityform_id($sections[4]) : 0;
+    $hero     = isset($sections[0]) ? sarv_service_hero($sections[0]) : [];
+    $stats    = isset($sections[1]) ? sarv_service_stats($sections[1]) : [];
+    $process  = isset($sections[2]) ? sarv_service_process($sections[2]) : [];
+    $bafg_ids = isset($sections[3]) ? sarv_service_bafg_ids($sections[3]) : [];
+    $videos   = isset($sections[3]) ? sarv_service_videos($sections[3]) : [];
+    $gf_id    = isset($sections[4]) ? sarv_service_gravityform_id($sections[4]) : 0;
     $long_raw = $sections[5] ?? '';
-    $faq      = isset($sections[6]) ? sarv_composite_faq($sections[6]) : [];
+    $faq      = isset($sections[6]) ? sarv_service_faq($sections[6]) : [];
 
     /* Resolve bafg pairs. */
     $bafg_pairs = [];
@@ -51,7 +51,7 @@
     }
 ?>
 
-<main id="primary" class="bg-warm-ivory sarv-composite-page">
+<div class="bg-warm-ivory sarv-composite-page">
 
     <?php get_template_part('template-parts/composite/hero', null, ['hero' => $hero]); ?>
 

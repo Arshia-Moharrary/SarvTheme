@@ -8,6 +8,8 @@
 defined('ABSPATH') || exit;
 
 $form_id = (int) ($args['form_id'] ?? 0);
+$title   = (string) ($args['title'] ?? 'فرم درخواست مشاوره رایگان');
+$intro   = (string) ($args['intro'] ?? 'برای دریافت مشاوره تخصصی و رایگان، این فرم را تکمیل کنید. همکاران ما در اسرع وقت با شما تماس می‌گیرند.');
 if ($form_id <= 0 || !shortcode_exists('gravityform')) return;
 ?>
 
@@ -22,7 +24,7 @@ if ($form_id <= 0 || !shortcode_exists('gravityform')) return;
                     <span class="w-8 h-px bg-champagne-gold"></span>
                 </div>
                 <h2 class="text-h3 md:text-h2 font-black text-deep-emerald leading-tight font-peyda mb-3">
-                    فرم درخواست مشاوره رایگان
+                     <?php echo esc_html($title); ?>
                 </h2>
                 <p class="text-body text-charcoal/70 font-peyda max-w-lg mx-auto">
                     برای دریافت مشاوره تخصصی و رایگان، این فرم را تکمیل کنید. همکاران ما در اسرع وقت با شما تماس می‌گیرند.

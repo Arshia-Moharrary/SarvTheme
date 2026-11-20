@@ -11,7 +11,7 @@ $raw = $args['raw'] ?? '';
 if (trim($raw) === '') return;
 
 /* Strip Flatsome wrappers only. Leave h2, p, ul, table, img, iframe, gallery shortcode intact. */
-$clean = sarv_composite_strip_wrappers($raw);
+$clean = sarv_service_strip_wrappers($raw);
 $html  = apply_filters('the_content', $clean);
 ?>
 
