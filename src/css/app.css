@@ -1613,3 +1613,265 @@ button:focus-visible {
         transition: none !important;
     }
 }
+
+/* =========================================
+   Portfolio Showcase
+   Uses only existing brand tokens.
+   ========================================= */
+
+@layer components {
+
+    /* ----- Filter nav ----- */
+    .sarv-portfolio-filter {
+        @apply inline-flex items-center gap-2 px-4 py-2.5 rounded-full border border-soft-stone bg-white text-deep-emerald font-peyda font-bold text-body transition-all duration-300 hover:border-champagne-gold hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne-gold focus-visible:ring-offset-2 focus-visible:ring-offset-warm-ivory;
+    }
+
+    .sarv-portfolio-filter.is-active {
+        @apply bg-deep-emerald text-warm-ivory border-deep-emerald shadow-lg;
+    }
+
+    .sarv-portfolio-filter__count {
+        @apply inline-flex items-center justify-center min-w-[1.5rem] h-6 px-1.5 rounded-full bg-soft-stone/50 text-charcoal/70 text-caption font-bold transition-colors duration-300;
+    }
+
+    .sarv-portfolio-filter.is-active .sarv-portfolio-filter__count {
+        @apply bg-champagne-gold text-deep-emerald;
+    }
+
+    /* ----- Grid ----- */
+    /* ----- Sectioned grid (grouped by image type) ----- */
+    .sarv-portfolio-sections {
+        @apply flex flex-col gap-14 md:gap-20;
+    }
+
+    .sarv-portfolio-section {
+        @apply flex flex-col;
+    }
+
+    .sarv-portfolio-section__header {
+        @apply flex items-center gap-4 mb-6 md:mb-8;
+    }
+
+    .sarv-portfolio-section__line {
+        @apply block w-8 h-px bg-champagne-gold shrink-0;
+    }
+
+    .sarv-portfolio-section__title {
+        @apply text-h4 md:text-h3 font-black text-deep-emerald font-peyda m-0 leading-tight;
+    }
+
+    .sarv-portfolio-section__grid {
+        @apply grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 md:gap-3 lg:gap-4 items-start;
+    }
+
+    /* ----- Card ----- */
+    .sarv-portfolio-card__img {
+        @apply transition-transform duration-700 ease-out;
+    }
+
+    .sarv-portfolio-card:hover .sarv-portfolio-card__img {
+        transform: scale(1.03);
+    }
+
+    .sarv-portfolio-card__overlay {
+        @apply absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none;
+        background: linear-gradient(to top,
+                color-mix(in srgb, var(--color-forest-noir) 55%, transparent),
+                transparent);
+    }
+
+    .sarv-portfolio-card__cat {
+        @apply absolute bottom-3 start-3 z-10 inline-flex items-center px-3 py-1 rounded-full bg-champagne-gold text-deep-emerald text-caption font-bold font-peyda opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-none;
+    }
+
+    .sarv-portfolio-card__count {
+        @apply absolute top-3 start-3 z-10 inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-warm-ivory/95 text-deep-emerald text-caption font-bold font-peyda backdrop-blur-sm;
+    }
+
+    .sarv-portfolio-card__zoom {
+        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-warm-ivory/95 text-deep-emerald flex items-center justify-center opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 pointer-events-none;
+    }
+
+    /* ----- Pagination ----- */
+    .sarv-portfolio-pagination__btn {
+        @apply inline-flex items-center justify-center gap-1.5 min-w-10 h-10 px-3 rounded-brand border border-soft-stone bg-white text-deep-emerald font-peyda font-bold text-body transition-all duration-300 hover:border-champagne-gold hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne-gold focus-visible:ring-offset-2;
+    }
+
+    .sarv-portfolio-pagination__btn.is-current {
+        @apply bg-deep-emerald text-warm-ivory border-deep-emerald shadow-lg;
+    }
+
+    .sarv-portfolio-pagination__btn.is-disabled {
+        @apply opacity-40 cursor-not-allowed hover:translate-y-0 hover:border-soft-stone;
+    }
+
+    .sarv-portfolio-pagination__ellipsis {
+        @apply inline-flex items-center justify-center w-10 h-10 text-charcoal/40 font-bold;
+    }
+
+    /* ----- Load More ----- */
+    .sarv-load-more-wrap {
+        @apply mt-14 md:mt-20 flex justify-center;
+    }
+
+    .sarv-load-more {
+        @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-brand bg-deep-emerald text-warm-ivory font-peyda font-bold text-body shadow-lg transition-all duration-300 hover:bg-forest-noir hover:-translate-y-0.5 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne-gold focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0;
+    }
+
+    .sarv-load-more__icon {
+        @apply transition-transform duration-300;
+    }
+
+    .sarv-load-more:hover .sarv-load-more__icon {
+        transform: translateY(2px);
+    }
+
+    .sarv-load-more.is-loading .sarv-load-more__icon {
+        animation: sarv-spin 0.9s linear infinite;
+    }
+
+    @keyframes sarv-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sarv-portfolio-card__img,
+    .sarv-portfolio-card__overlay,
+    .sarv-portfolio-card__cat,
+    .sarv-portfolio-card__zoom,
+    .sarv-portfolio-filter,
+    .sarv-portfolio-filter__count,
+    .sarv-portfolio-pagination__btn {
+        transition: none !important;
+    }
+
+    .sarv-portfolio-card:hover .sarv-portfolio-card__img {
+        transform: none !important;
+    }
+
+    .sarv-load-more,
+    .sarv-load-more__icon {
+        transition: none !important;
+    }
+}
+
+/* =========================================
+   Portfolio Lightbox
+   Native <dialog>, no library.
+   ========================================= */
+
+@layer components {
+
+    .sarv-lightbox {
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        background: color-mix(in srgb, var(--color-forest-noir) 94%, transparent);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        color: var(--color-warm-ivory);
+        overflow: hidden;
+    }
+
+    .sarv-lightbox[open] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: sarv-lb-in 0.22s ease-out;
+    }
+
+    .sarv-lightbox::backdrop {
+        background: transparent;
+    }
+
+    .sarv-lightbox__stage {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        padding: 3.5rem 4rem;
+        pointer-events: none;
+    }
+
+    .sarv-lightbox__img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        border-radius: var(--radius-brand-lg);
+        box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.5);
+        pointer-events: auto;
+        user-select: none;
+        -webkit-user-drag: none;
+    }
+
+    .sarv-lightbox__close {
+        @apply absolute top-4 end-4 z-10 w-11 h-11 rounded-full bg-warm-ivory/10 text-warm-ivory flex items-center justify-center transition-colors duration-200 hover:bg-warm-ivory/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne-gold;
+    }
+
+    .sarv-lightbox__nav {
+        @apply absolute top-1/2 -translate-y-1/2 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full bg-warm-ivory/10 text-warm-ivory flex items-center justify-center transition-colors duration-200 hover:bg-warm-ivory/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-champagne-gold disabled:opacity-20 disabled:cursor-not-allowed disabled:hover:bg-warm-ivory/10;
+    }
+
+    .sarv-lightbox__nav--prev {
+        inset-inline-start: 1rem;
+    }
+
+    .sarv-lightbox__nav--next {
+        inset-inline-end: 1rem;
+    }
+
+    .sarv-lightbox__counter {
+        @apply absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-warm-ivory/10 text-warm-ivory text-caption font-bold font-peyda backdrop-blur-sm;
+    }
+}
+
+@keyframes sarv-lb-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    .sarv-lightbox__stage {
+        padding: 4rem 1rem 4rem;
+    }
+
+    .sarv-lightbox__nav {
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+
+    .sarv-lightbox__nav--prev {
+        inset-inline-start: 0.5rem;
+    }
+
+    .sarv-lightbox__nav--next {
+        inset-inline-end: 0.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sarv-lightbox[open] {
+        animation: none !important;
+    }
+
+    .sarv-lightbox__close,
+    .sarv-lightbox__nav {
+        transition: none !important;
+    }
+}

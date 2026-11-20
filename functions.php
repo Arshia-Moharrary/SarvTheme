@@ -94,6 +94,13 @@ function sarv_enqueue_assets(): void
             }
         }
     }
+
+    if (is_page('portfolio')) {
+        wp_localize_script('sarv-main-js', 'sarvPortfolio', [
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce'   => wp_create_nonce('sarv_portfolio_load_more'),
+        ]);
+    }
 }
 add_action('wp_enqueue_scripts', 'sarv_enqueue_assets');
 
@@ -303,3 +310,7 @@ require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/contact-submissions.php';
 require_once get_template_directory() . '/inc/blog-helpers.php';
 require_once get_template_directory() . '/inc/single-helpers.php';
+require_once get_template_directory() . '/inc/portfolio-cpt.php';
+require_once get_template_directory() . '/inc/portfolio-meta.php';
+require_once get_template_directory() . '/inc/portfolio-page.php';
+require_once get_template_directory() . '/inc/portfolio-ajax.php';

@@ -1,0 +1,86 @@
+.sarv-gallery-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.sarv-gallery-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #dcdcde;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: grab;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.sarv-gallery-item:hover {
+    border-color: #2271b1;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .06);
+}
+
+.sarv-gallery-item.is-dragging {
+    opacity: 0.4;
+    cursor: grabbing;
+}
+
+.sarv-gallery-thumb {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: #f6f7f7;
+    pointer-events: none;
+}
+
+.sarv-gallery-type {
+    width: 100%;
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.sarv-gallery-handle {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, .92);
+    color: #50575e;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: grab;
+    user-select: none;
+}
+
+.sarv-gallery-remove {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    background: rgba(255, 255, 255, .92);
+    color: #d63638;
+    border: 0;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+}
+
+.sarv-gallery-remove:hover {
+    background: #d63638;
+    color: #fff;
+}

@@ -448,4 +448,231 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', onReadingScroll, { passive: true });
         updateReadingProgress();
     }
+
+    // ==========================================
+    // Portfolio Lightbox
+    // ==========================================
+    const lbRoot = document.querySelector('[data-sarv-lightbox-root]');
+
+    if (lbRoot && typeof lbRoot.showModal === 'function') {
+        const dataEl = document.getElementById('sarv-portfolio-data');
+        const lbImg = lbRoot.querySelector('[data-sarv-lightbox-img]');
+        const lbPrev = lbRoot.querySelector('[data-sarv-lightbox-prev]');
+        const lbNext = lbRoot.querySelector('[data-sarv-lightbox-next]');
+        const lbClose = lbRoot.querySelector('[data-sarv-lightbox-close]');
+        const lbCounter = lbRoot.querySelector('[data-sarv-lightbox-counter]');
+        const lbStage = lbRoot.querySelector('[data-sarv-lightbox-stage]');
+
+        let portfolioData = {};
+        try {
+            portfolioData = dataEl ? JSON.parse(dataEl.textContent.trim()) : {};
+        } catch (e) {
+            portfolioData = {};
+        }
+
+        let currentImages = [];
+        let currentIndex = 0;
+        let lastTrigger = null;
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        const update = () => {
+            const item = currentImages[currentIndex];
+            if (!item) return;
+
+            // Set srcset-friendly attributes. The `full` URL is used; WordPress
+            // would normally add srcset, but since we're inside a JSON payload
+            // (no HTML), we set the URL directly. Single high-quality source.
+            lbImg.src = item.full;
+            lbImg.alt = item.alt || '';
+            lbCounter.textContent = (currentIndex + 1) + ' / ' + currentImages.length;
+
+            lbPrev.disabled = currentIndex === 0;
+            lbNext.disabled = currentIndex === currentImages.length - 1;
+
+            // Preload adjacent
+            [currentIndex - 1, currentIndex + 1].forEach(i => {
+                const next = currentImages[i];
+                if (next && next.full) {
+                    const pre = new Image();
+                    pre.src = next.full;
+                }
+            });
+        };
+
+        const open = (images, index, trigger) => {
+            currentImages = images;
+            currentIndex = index;
+            lastTrigger = trigger;
+            update();
+            lbRoot.showModal();
+            document.body.style.overflow = 'hidden';
+        };
+
+        const goNext = () => {
+            if (currentIndex < currentImages.length - 1) {
+                currentIndex++;
+                update();
+            }
+        };
+
+        const goPrev = () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                update();
+            }
+        };
+
+        // Wire triggers
+        document.querySelectorAll('[data-sarv-lightbox]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const id = btn.getAttribute('data-post-id');
+                const images = portfolioData[id];
+                if (Array.isArray(images) && images.length) {
+                    open(images, 0, btn);
+                }
+            });
+        });
+
+        // Controls
+        lbClose.addEventListener('click', () => lbRoot.close());
+        lbPrev.addEventListener('click', goPrev);
+        lbNext.addEventListener('click', goNext);
+
+        // Backdrop click — close when clicking on the dialog itself (not on children)
+        lbRoot.addEventListener('click', (e) => {
+            if (e.target === lbRoot) {
+                lbRoot.close();
+            }
+        });
+
+        // Keyboard — ArrowRight/Left
+        lbRoot.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); goNext(); }
+            if (e.key === 'ArrowLeft') { e.preventDefault(); goPrev(); }
+        });
+
+        // Touch swipe on stage
+        lbStage.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        lbStage.addEventListener('touchend', (e) => {
+            if (!e.changedTouches.length) return;
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            // Vertical swipe intent → ignore (don't hijack scrolling)
+            if (Math.abs(dy) > Math.abs(dx) * 0.7) return;
+            if (Math.abs(dx) < 50) return;
+            if (dx < 0) goNext();
+            else goPrev();
+        }, { passive: true });
+
+        // Restore scroll & focus on close
+        lbRoot.addEventListener('close', () => {
+            document.body.style.overflow = '';
+            lbImg.src = '';
+            lbImg.alt = '';
+            currentImages = [];
+            currentIndex = 0;
+            if (lastTrigger && typeof lastTrigger.focus === 'function') {
+                lastTrigger.focus();
+            }
+            lastTrigger = null;
+        });
+    }
+
+    // ==========================================
+    // Portfolio Load More
+    // ==========================================
+    const loadMoreBtn = document.querySelector('[data-sarv-load-more]');
+
+    if (loadMoreBtn && typeof window.sarvPortfolio !== 'undefined') {
+        let isLoading = false;
+        const originalLabel = loadMoreBtn.querySelector('span').textContent;
+
+        loadMoreBtn.addEventListener('click', async () => {
+            if (isLoading) return;
+            isLoading = true;
+
+            const nextPage = parseInt(loadMoreBtn.dataset.page, 10) + 1;
+            const totalPages = parseInt(loadMoreBtn.dataset.total, 10);
+            const treatment = loadMoreBtn.dataset.treatment || '';
+
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.classList.add('is-loading');
+            loadMoreBtn.querySelector('span').textContent = 'در حال بارگذاری…';
+
+            const form = new FormData();
+            form.append('action', 'sarv_portfolio_load_more');
+            form.append('nonce', window.sarvPortfolio.nonce);
+            form.append('paged', nextPage);
+            form.append('treatment', treatment);
+
+            try {
+                const res = await fetch(window.sarvPortfolio.ajaxUrl, {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    body: form,
+                });
+                const json = await res.json();
+
+                if (!json.success) throw new Error('request_failed');
+
+                appendPortfolioBatch(json.data.html);
+                loadMoreBtn.dataset.page = nextPage;
+
+                if (nextPage >= totalPages || !json.data.has_more) {
+                    loadMoreBtn.closest('.sarv-load-more-wrap')?.remove();
+                } else {
+                    loadMoreBtn.disabled = false;
+                    loadMoreBtn.classList.remove('is-loading');
+                    loadMoreBtn.querySelector('span').textContent = originalLabel;
+                }
+            } catch (e) {
+                loadMoreBtn.disabled = false;
+                loadMoreBtn.classList.remove('is-loading');
+                loadMoreBtn.querySelector('span').textContent = originalLabel;
+            } finally {
+                isLoading = false;
+            }
+        });
+
+        function appendPortfolioBatch(html) {
+            const container = document.querySelector('.sarv-portfolio-sections');
+            if (!container) return;
+
+            const temp = document.createElement('div');
+            temp.innerHTML = html.trim();
+
+            temp.querySelectorAll('[data-priority]').forEach(newSection => {
+                const priority = newSection.dataset.priority;
+                const existing = container.querySelector('[data-priority="' + priority + '"]');
+
+                if (existing) {
+                    const existingGrid = existing.querySelector('.sarv-portfolio-section__grid');
+                    const newGrid = newSection.querySelector('.sarv-portfolio-section__grid');
+                    if (existingGrid && newGrid) {
+                        existingGrid.append(...newGrid.children);
+                    }
+                } else {
+                    insertSectionInOrder(container, newSection);
+                }
+            });
+        }
+
+        function insertSectionInOrder(container, newSection) {
+            const priority = parseInt(newSection.dataset.priority, 10);
+            const sections = Array.from(container.querySelectorAll('[data-priority]'));
+            const next = sections.find(s => parseInt(s.dataset.priority, 10) > priority);
+
+            if (next) {
+                container.insertBefore(newSection, next);
+            } else {
+                container.appendChild(newSection);
+            }
+        }
+    }
 });
