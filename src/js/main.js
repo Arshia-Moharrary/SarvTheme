@@ -270,7 +270,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    
+
 
     // ==========================================
     // Floating Contact Widget
@@ -302,4 +302,102 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // ==========================================
+    // Single Article — ToC Scroll-Spy
+    // ==========================================
+    const tocLinks = document.querySelectorAll('[data-sarv-toc-target]');
+    const articleContent = document.querySelector('[data-sarv-article-content]');
+
+    if (tocLinks.length && articleContent && 'IntersectionObserver' in window) {
+        const linkMap = new Map();
+        tocLinks.forEach(link => {
+            const id = link.getAttribute('data-sarv-toc-target');
+            if (id) linkMap.set(id, link);
+        });
+
+        const headings = Array.from(articleContent.querySelectorAll('h2[id], h3[id]'));
+
+        if (headings.length) {
+            let currentActive = null;
+            const setActive = (id) => {
+                if (currentActive) currentActive.classList.remove('is-active');
+                const link = linkMap.get(id);
+                if (link) {
+                    link.classList.add('is-active');
+                    currentActive = link;
+                }
+            };
+
+            const spy = new IntersectionObserver((entries) => {
+                const visible = entries
+                    .filter(e => e.isIntersecting)
+                    .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+                if (visible.length) setActive(visible[0].target.id);
+            }, { rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+
+            headings.forEach(h => spy.observe(h));
+
+            tocLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    setActive(link.getAttribute('data-sarv-toc-target'));
+                });
+            });
+        }
+    }
+
+    // ==========================================
+    // Single Article — Share
+    // ==========================================
+    document.querySelectorAll('[data-sarv-share]').forEach(shareRoot => {
+        const copyBtn = shareRoot.querySelector('[data-sarv-share-copy]');
+        const nativeBtn = shareRoot.querySelector('[data-sarv-share-native]');
+        const toast = shareRoot.querySelector('[data-sarv-share-toast]');
+
+        const showToast = (msg) => {
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.add('is-visible');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => toast.classList.remove('is-visible'), 2200);
+        };
+
+        const copyLink = async (url) => {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(url);
+                } else {
+                    const ta = document.createElement('textarea');
+                    ta.value = url;
+                    ta.setAttribute('readonly', '');
+                    ta.style.cssText = 'position:fixed;opacity:0;';
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                }
+                showToast('لینک کپی شد');
+            } catch (e) {
+                showToast('کپی ناموفق بود');
+            }
+        };
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                copyLink(copyBtn.getAttribute('data-url') || window.location.href);
+            });
+        }
+
+        if (nativeBtn && typeof navigator.share === 'function') {
+            nativeBtn.hidden = false;
+            nativeBtn.addEventListener('click', async () => {
+                try {
+                    await navigator.share({
+                        title: nativeBtn.getAttribute('data-title') || document.title,
+                        url: nativeBtn.getAttribute('data-url') || window.location.href,
+                    });
+                } catch (e) { /* user cancelled */ }
+            });
+        }
+    });
 });
