@@ -30,6 +30,7 @@
     $toc_data = sarv_build_toc($rendered);
     $body     = $toc_data['html'];
     $toc      = $toc_data['toc'];
+    $body = sarv_wrap_tables($body);
     $has_toc  = count($toc) >= 2;
 ?>
 

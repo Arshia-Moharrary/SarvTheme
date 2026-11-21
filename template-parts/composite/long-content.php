@@ -13,6 +13,7 @@ if (trim($raw) === '') return;
 /* Strip Flatsome wrappers only. Leave h2, p, ul, table, img, iframe, gallery shortcode intact. */
 $clean = sarv_service_strip_wrappers($raw);
 $html  = apply_filters('the_content', $clean);
+$html = sarv_wrap_tables($html);
 ?>
 
 <section class="sarv-composite-long py-16 md:py-24 bg-warm-ivory">

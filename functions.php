@@ -319,3 +319,4 @@ require_once get_template_directory() . '/inc/composite-page.php';
 require_once get_template_directory() . '/inc/laminate-page.php';
 require_once get_template_directory() . '/inc/implant-page.php';
 require_once get_template_directory() . '/inc/bleaching-page.php';
+require_once get_template_directory() . '/inc/content-helpers.php';

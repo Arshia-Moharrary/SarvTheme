@@ -1525,19 +1525,37 @@ button:focus-visible {
 }
 
 /* Tables */
+/* Tables — wrapped in .sarv-table-wrap by sarv_wrap_tables() */
 .sarv-article-content .sarv-table-wrap {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     margin: 2em 0;
     border-radius: var(--radius-brand-lg);
     border: 1px solid var(--color-soft-stone);
+    max-width: 100%;
 }
 
 .sarv-article-content table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.95em;
+}
+
+/* Enforce readable min width ONLY when wrapped (wrapper scrolls) */
+.sarv-article-content .sarv-table-wrap table {
     min-width: 30rem;
+}
+
+/* Safety net: unwrapped tables (should not occur after fix) scroll on themselves */
+.sarv-article-content > table {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+    font-size: 0.95em;
+    min-width: 0;
 }
 
 .sarv-article-content th,
