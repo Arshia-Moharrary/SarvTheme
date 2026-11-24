@@ -38,8 +38,7 @@ if (! defined('ABSPATH')) {
                                 ?>
                             </div>
                         </div>
-                        <span class="text-h3 font-black tracking-widest text-warm-ivory leading-none">کلینیک</span>
-                        <span class="text-h3 font-black tracking-widest text-warm-ivory leading-none mt-1">سرو</span>
+                        <span class="text-h3 font-black text-warm-ivory leading-none">کلینیک سرو</span>
                     </div>
                 </div>
 
