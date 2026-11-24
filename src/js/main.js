@@ -270,39 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
-
-    // ==========================================
-    // Floating Contact Widget
-    // ==========================================
-    const floatingContact = document.getElementById('floating-contact');
-    const fcToggle = document.getElementById('floating-contact-toggle');
-
-    if (floatingContact && fcToggle) {
-        fcToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = floatingContact.classList.toggle('is-open');
-            fcToggle.setAttribute('aria-expanded', isOpen);
-        });
-
-        // Close when clicking outside on mobile
-        document.addEventListener('click', (e) => {
-            if (!floatingContact.contains(e.target) && floatingContact.classList.contains('is-open')) {
-                floatingContact.classList.remove('is-open');
-                fcToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && floatingContact.classList.contains('is-open')) {
-                floatingContact.classList.remove('is-open');
-                fcToggle.setAttribute('aria-expanded', 'false');
-                fcToggle.focus();
-            }
-        });
-    }
-
     // ==========================================
     // Single Article — ToC Scroll-Spy
     // ==========================================
