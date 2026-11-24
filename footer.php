@@ -124,7 +124,7 @@ if (! defined('ABSPATH')) {
                                 <span class="w-8 h-0.5 bg-champagne-gold/50 rounded-full"></span>
                             </h4>
                             <ul class="flex flex-col gap-3 text-warm-ivory/70 text-body">
-                                <li><a href="#" class="hover:text-champagne-gold transition-colors duration-300">رزرو نوبت آنلاین</a></li>
+                                <li><a href="#" class="hover:text-champagne-gold transition-colors duration-300">برآورد قیمت</a></li>
                                 <li><a href="#" class="hover:text-champagne-gold transition-colors duration-300">نوبت حضوری</a></li>
                                 <li><a href="#" class="hover:text-champagne-gold transition-colors duration-300">مشاوره آنلاین</a></li>
                             </ul>

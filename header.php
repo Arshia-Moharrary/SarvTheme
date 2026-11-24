@@ -127,8 +127,8 @@ $phone_clean = preg_replace('/[^0-9+]/', '', $phone);
                             <?php endif; ?>
 
                             <!-- دکمه اصلی CTA -->
-                            <a href="#" class="cta-btn group inline-flex items-center gap-3 bg-deep-emerald text-warm-ivory ps-5 pe-1.5 py-1.5 rounded-brand font-peyda font-bold text-body shadow-lg hover:bg-forest-noir hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
-                                <span>رزرو نوبت</span>
+                            <a href="<?php echo esc_url(home_url('/contact')); ?>" class="cta-btn group inline-flex items-center gap-3 bg-deep-emerald text-warm-ivory ps-5 pe-1.5 py-1.5 rounded-brand font-peyda font-bold text-body shadow-lg hover:bg-forest-noir hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300">
+                                <span>مشاوره رایگان</span>
                                 <span class="w-9 h-9 rounded-full bg-champagne-gold text-deep-emerald flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>

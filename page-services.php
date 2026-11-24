@@ -194,8 +194,7 @@ $services = [
             <h2 class="text-h2 md:text-h1 font-black text-warm-ivory mb-6 relative z-10 font-peyda">آماده‌اید لبخند رویایی‌تان را بسازید؟</h2>
             <p class="text-warm-ivory/70 text-body-range md:text-xl mb-10 max-w-2xl mx-auto relative z-10 font-peyda">تیم متخصصین ما آماده ارائه مشاوره تخصصی و طراحی اختصاصی لبخند شما هستند.</p>
 
-            <!-- @TODO: fix the mobile number -->
-            <a href="tel:09394200102" class="group inline-flex items-center gap-3 bg-champagne-gold text-deep-emerald ps-8 pe-2 py-2 rounded-brand font-peyda font-bold text-body shadow-lg hover:bg-warm-ivory transition-all duration-300 hover:-translate-y-0.5 relative z-10">
+            <a href="<?php echo esc_url(home_url('/contact')); ?>" class="group inline-flex items-center gap-3 bg-champagne-gold text-deep-emerald ps-8 pe-2 py-2 rounded-brand font-peyda font-bold text-body shadow-lg hover:bg-warm-ivory transition-all duration-300 hover:-translate-y-0.5 relative z-10">
                 <span>مشاوره رایگان</span>
                 <span class="w-10 h-10 rounded-full bg-deep-emerald text-champagne-gold flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110">
                     <svg class="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
