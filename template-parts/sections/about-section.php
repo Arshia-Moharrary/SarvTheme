@@ -79,7 +79,7 @@ if (! defined('ABSPATH')) {
                             </svg>
                         </div>
                         <span class="text-h3 font-black text-deep-emerald font-satoshi mb-1" dir="ltr">
-                            <?php echo esc_html(get_theme_mod('sarv_about_stat_1_number', '+۵K')); ?>
+                            <?php echo esc_html(get_theme_mod('sarv_about_stat_1_number', '+300K')); ?>
                         </span>
                         <span class="text-caption text-charcoal/60 font-peyda">
                             <?php echo esc_html(get_theme_mod('sarv_about_stat_1_label', 'رزرو موفق')); ?>
@@ -94,7 +94,7 @@ if (! defined('ABSPATH')) {
                             </svg>
                         </div>
                         <span class="text-h3 font-black text-deep-emerald font-satoshi mb-1" dir="ltr">
-                            <?php echo esc_html(get_theme_mod('sarv_about_stat_2_number', '+۵۰K')); ?>
+                            <?php echo esc_html(get_theme_mod('sarv_about_stat_2_number', '+300K')); ?>
                         </span>
                         <span class="text-caption text-charcoal/60 font-peyda">
                             <?php echo esc_html(get_theme_mod('sarv_about_stat_2_label', 'رضایت کاربران')); ?>
@@ -109,7 +109,7 @@ if (! defined('ABSPATH')) {
                             </svg>
                         </div>
                         <span class="text-h3 font-black text-deep-emerald font-satoshi mb-1" dir="ltr">
-                            <?php echo esc_html(get_theme_mod('sarv_about_stat_3_number', '+۱۵')); ?>
+                            <?php echo esc_html(get_theme_mod('sarv_about_stat_3_number', '+15')); ?>
                         </span>
                         <span class="text-caption text-charcoal/60 font-peyda">
                             <?php echo esc_html(get_theme_mod('sarv_about_stat_3_label', 'سال سابقه پزشکی')); ?>
@@ -124,7 +124,7 @@ if (! defined('ABSPATH')) {
                             </svg>
                         </div>
                         <span class="text-h3 font-black text-deep-emerald font-satoshi mb-1" dir="ltr">
-                            <?php echo esc_html(get_theme_mod('sarv_about_stat_4_number', '+۲۵۰')); ?>
+                            <?php echo esc_html(get_theme_mod('sarv_about_stat_4_number', '289')); ?>
                         </span>
                         <span class="text-caption text-charcoal/60 font-peyda">
                             <?php echo esc_html(get_theme_mod('sarv_about_stat_4_label', 'پزشک فعال')); ?>
