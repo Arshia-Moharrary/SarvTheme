@@ -164,7 +164,7 @@ $sarv_hero_stats = [
             </div>
 
             <!-- ============ Stats ============ -->
-            <ul role="list" class="lg:col-span-12 grid md:grid-cols-4 grid-cols-2 sm:gap-0 gap-4 lg:mt-8 pt-8 border-t border-warm-ivory/15">
+            <ul role="list" class="lg:col-span-12 grid grid-cols-3 sm:gap-0 gap-4 lg:mt-8 pt-8 border-t border-warm-ivory/15">
                 <?php foreach ($sarv_hero_stats as $i => $stat) : ?>
                     <li class="hero-fade flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 border-s border-warm-ivory/15 ps-3 sm:ps-8"
                         style="--d:<?php echo 800 + ($i * 100); ?>ms">

@@ -312,6 +312,17 @@
         r.addEventListener('click', function () { touch(500); });          // also confirms the pre-selected treatment
     });
 
+    /* ---------- step 3: arch expander (progressive disclosure) ---------- */
+    var archExpander = q('[data-arch-expander]');
+    var archBody = q('[data-arch-body]');
+    if (archExpander && archBody) {
+        archExpander.addEventListener('click', function () {
+            var open = archExpander.getAttribute('aria-expanded') === 'true';
+            archExpander.setAttribute('aria-expanded', String(!open));
+            archBody.classList.toggle('is-open', !open);
+        });
+    }
+
     /* ---------- step 2: quantity ---------- */
 
     el.chips.forEach(function (c) {

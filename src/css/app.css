@@ -1008,6 +1008,70 @@ button:focus-visible {
     .est-notice__undo {
         @apply font-bold text-champagne-gold underline underline-offset-4 hover:text-warm-ivory;
     }
+
+    /* Compact treatment pills */
+    .est-pill {
+        @apply relative inline-flex items-center gap-2.5 h-12 px-5 rounded-brand border border-warm-ivory/15 bg-warm-ivory/5 text-warm-ivory font-peyda font-bold cursor-pointer select-none transition-all duration-300 hover:border-champagne-gold/60 hover:bg-warm-ivory/10 active:scale-95;
+    }
+
+    .est-pill__icon {
+        @apply w-6 h-6 shrink-0 text-champagne-gold transition-colors duration-300;
+    }
+
+    .est-radio:checked+.est-pill {
+        @apply bg-warm-ivory text-deep-emerald border-champagne-gold shadow-xl;
+    }
+
+    .est-radio:checked+.est-pill .est-pill__icon {
+        @apply text-deep-emerald;
+    }
+
+    .est-radio:focus-visible+.est-pill {
+        @apply ring-2 ring-champagne-gold ring-offset-2 ring-offset-deep-emerald;
+    }
+
+    /* Inline custom count input — looks like a dashed chip that becomes an input */
+    .est-chip--input {
+        @apply p-0 bg-transparent border-dashed cursor-text;
+        min-width: 6.5rem;
+    }
+
+    .est-chip--input:focus-within {
+        @apply border-champagne-gold bg-warm-ivory/10;
+    }
+
+    .est-chip__input {
+        @apply w-full h-full px-4 bg-transparent text-warm-ivory font-peyda font-bold text-center outline-none placeholder:text-warm-ivory/50 placeholder:font-normal;
+    }
+
+    /* Arch expander (step 3 header) */
+    .est-expander {
+        @apply flex items-center justify-between gap-3 w-full px-4 py-3.5 rounded-brand border border-warm-ivory/20 bg-warm-ivory/5 text-warm-ivory font-peyda transition-all duration-300 hover:border-champagne-gold/60 hover:bg-warm-ivory/10;
+    }
+
+    .est-expander__main {
+        @apply flex items-center gap-3;
+    }
+
+    .est-expander__title {
+        @apply sm:text-body-range text-caption font-bold;
+    }
+
+    .est-expander__meta {
+        @apply flex items-center gap-2;
+    }
+
+    .est-expander__chevron {
+        @apply w-5 h-5 text-champagne-gold transition-transform duration-300;
+    }
+
+    .est-expander[aria-expanded="true"] {
+        @apply border-champagne-gold/60 bg-warm-ivory/10;
+    }
+
+    .est-expander[aria-expanded="true"] .est-expander__chevron {
+        @apply rotate-180;
+    }
 }
 
 /* ----- Dental arch ----- */

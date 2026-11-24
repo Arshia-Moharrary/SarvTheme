@@ -50,7 +50,7 @@ wp_enqueue_script(
 <section
     id="cost-estimator"
     aria-labelledby="estimator-title"
-    class="relative bg-warm-ivory text-charcoal py-20 lg:py-28"
+    class="relative bg-warm-ivory text-charcoal"
     data-estimator
     data-rest="<?php echo esc_url($sarv_cfg['rest']); ?>"
     data-nonce="<?php echo esc_attr($sarv_cfg['nonce']); ?>"
@@ -61,10 +61,10 @@ wp_enqueue_script(
         <div class="rounded-brand-lg bg-deep-emerald text-warm-ivory shadow-2xl p-5 sm:p-10 lg:p-14 reveal-up">
 
             <header class="max-w-2xl mb-10 lg:mb-14">
-                <h2 id="estimator-title" class="text-h2 sm:text-h1 font-black font-peyda leading-[1.3] tracking-normal mb-4">
+                <h2 id="estimator-title" class="text-h3 sm:text-h2 font-black font-peyda leading-[1.3] tracking-normal mb-4">
                     هزینه درمان خود را <span class="text-champagne-gold">برآورد</span> کنید
                 </h2>
-                <p class="text-body-range text-warm-ivory/80 font-peyda leading-relaxed">
+                <p class="text-body text-warm-ivory/80 font-peyda leading-relaxed">
                     نوع درمان و تعداد دندان‌ها را مشخص کنید تا مشاوران ما قیمت دقیق را متناسب با نیاز شما اعلام کنند.
                 </p>
                 <p class="mt-4 flex items-start gap-2 text-caption font-peyda text-warm-ivory/70 leading-relaxed">
@@ -79,223 +79,212 @@ wp_enqueue_script(
                 <p class="mb-8 text-body font-peyda text-champagne-gold">برای استفاده از این بخش، لطفاً جاوااسکریپت مرورگر را فعال کنید.</p>
             </noscript>
 
-            <form data-form novalidate class="grid grid-cols-1 lg:grid-cols-12 gap-x-12 gap-y-10 lg:gap-y-12" aria-describedby="estimator-title">
+            <form data-form novalidate class="space-y-8 lg:space-y-10" aria-describedby="estimator-title">
 
-                <!-- ============ A · Steps 1 & 2 ============ -->
-                <div class="lg:col-span-7 space-y-10">
+                <!-- ============ A · Steps 1 & 2 — side by side on desktop ============ -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-8">
 
-                    <!-- Step 1: treatment -->
+                    <!-- Step 1: treatment (compact pills) -->
                     <fieldset>
                         <legend class="est-step"><span class="est-step__num" aria-hidden="true">۱</span>نوع درمان</legend>
-                        <div class="grid grid-cols-3 gap-3 sm:gap-4 mt-5">
+                        <div class="flex flex-wrap gap-2 sm:gap-3 mt-4">
                             <?php foreach ($sarv_treatments as $key => $t) : ?>
                                 <div>
-                                    <input
-                                        type="radio"
-                                        class="est-radio sr-only"
-                                        name="treatment"
+                                    <input type="radio" class="est-radio sr-only" name="treatment"
                                         id="est-treatment-<?php echo esc_attr($key); ?>"
                                         value="<?php echo esc_attr($key); ?>"
                                         data-label="<?php echo esc_attr($t['label']); ?>"
                                         <?php checked($key, $sarv_default_treatment); ?>>
-                                    <label for="est-treatment-<?php echo esc_attr($key); ?>" class="est-card">
-                                        <span class="est-card__check" aria-hidden="true">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"></path>
-                                            </svg>
-                                        </span>
-                                        <svg class="est-card__icon" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><?php echo $t['icon']; // phpcs:ignore WordPress.Security.EscapeOutput -- static SVG 
-                                                                                                                                                                                                                ?></svg>
-                                        <span class="text-body sm:text-h4"><?php echo esc_html($t['label']); ?></span>
+                                    <label for="est-treatment-<?php echo esc_attr($key); ?>" class="est-pill">
+                                        <svg class="est-pill__icon" fill="none" stroke="currentColor" stroke-width="1.6"
+                                            stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><?php echo $t['icon']; // phpcs:ignore 
+                                                                                                                                    ?></svg>
+                                        <span><?php echo esc_html($t['label']); ?></span>
                                     </label>
                                 </div>
                             <?php endforeach; ?>
                         </div>
                     </fieldset>
 
-                    <!-- Step 2: quantity -->
+                    <!-- Step 2: quantity (chips + inline custom input) -->
                     <fieldset>
                         <legend class="est-step"><span class="est-step__num" aria-hidden="true">۲</span>چند دندان نیاز دارید؟</legend>
-
-                        <div class="mt-5 flex flex-wrap gap-3" role="group" aria-label="تعداد پیشنهادی دندان">
+                        <div class="mt-4 flex flex-wrap items-center gap-2 sm:gap-3" role="group" aria-label="تعداد دندان">
                             <?php foreach ($sarv_quick as $n) : ?>
                                 <button type="button" class="est-chip" data-count="<?php echo (int) $n; ?>" aria-pressed="false">
-                                    <?php echo esc_html($sarv_fa($n)); ?> <span class="font-medium text-caption">دندان</span>
+                                    <?php echo esc_html($sarv_fa($n)); ?>
                                 </button>
                             <?php endforeach; ?>
-                        </div>
-
-                        <div class="mt-6 sm:max-w-xs">
-                            <label for="est-count" class="block mb-2 text-caption font-peyda text-warm-ivory/70">
-                                یا تعداد دلخواه را وارد کنید (<?php echo esc_html($sarv_fa($sarv_range[0]) . ' تا ' . $sarv_fa($sarv_range[1])); ?>)
+                            <label class="est-chip est-chip--input">
+                                <input id="est-count" name="count" type="text" inputmode="numeric"
+                                    autocomplete="off" dir="rtl" maxlength="2" placeholder="دلخواه"
+                                    class="est-chip__input" data-count-input
+                                    aria-label="تعداد دلخواه" aria-describedby="est-count-msg">
                             </label>
-                            <input
-                                id="est-count"
-                                name="count"
-                                type="text"
-                                inputmode="numeric"
-                                autocomplete="off"
-                                dir="rtl"
-                                maxlength="2"
-                                placeholder="<?php echo esc_attr($sarv_fa(14)); ?>"
-                                class="est-field"
-                                data-count-input
-                                aria-describedby="est-count-msg">
-                            <p id="est-count-msg" class="est-msg" data-count-msg aria-live="polite"></p>
                         </div>
+                        <p id="est-count-msg" class="est-msg" data-count-msg aria-live="polite"></p>
                     </fieldset>
                 </div>
 
-                <!-- ============ B · Step 3: visual selector (spans both rows on desktop, stays in view) ============ -->
-                <div class="lg:col-span-5 lg:col-start-8 lg:row-span-2 lg:self-start lg:sticky lg:top-8">
-                    <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
-                        <h3 class="est-step"><span class="est-step__num" aria-hidden="true">۳</span>موقعیت دقیق دندان‌ها</h3>
-                        <span class="est-tag">اختیاری</span>
-                    </div>
-                    <p class="mt-3 text-body font-peyda text-warm-ivory/70 leading-relaxed">
-                        اگر می‌خواهید، روی دندان‌های موردنظر بزنید؛ تعداد به‌صورت خودکار به‌روز می‌شود.
-                    </p>
+                <!-- ============ B · Step 3 — collapsible arch (closed by default) ============ -->
+                <div>
+                    <button type="button" class="est-expander" data-arch-expander
+                        aria-expanded="false" aria-controls="est-arch-body">
+                        <span class="est-expander__main">
+                            <span class="est-step__num" aria-hidden="true">۳</span>
+                            <span class="est-expander__title">موقعیت دقیق دندانها</span>
+                        </span>
+                        <span class="est-expander__meta">
+                            <span class="est-tag">اختیاری</span>
+                            <svg class="est-expander__chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </span>
+                    </button>
 
-                    <div class="mt-5 rounded-brand-lg bg-forest-noir border border-warm-ivory/10 p-4 sm:p-6">
-                        <div class="mx-auto w-full max-w-md" data-arch>
-                            <?php get_template_part('template-parts/estimator-arch'); ?>
+                    <div id="est-arch-body" class="est-reveal" data-arch-body>
+                        <div class="est-reveal__inner">
+                            <div class="pt-5">
+                                <p class="text-body font-peyda text-warm-ivory/70 leading-relaxed mb-4">
+                                    اگر میخواهید، روی دندانهای موردنظر بزنید؛ تعداد بهصورت خودکار بهروز میشود.
+                                </p>
+                                <div class="rounded-brand-lg bg-forest-noir border border-warm-ivory/10 p-4 sm:p-6">
+                                    <div class="mx-auto w-full max-w-md" data-arch>
+                                        <?php get_template_part('template-parts/estimator-arch'); ?>
+                                    </div>
+                                </div>
+                                <p class="mt-3 min-h-6 text-caption font-bold font-peyda text-warm-ivory/80" data-readout aria-live="polite"></p>
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    <button type="button" class="est-mini" data-arch-toggle="upper" aria-pressed="false">کل فک بالا</button>
+                                    <button type="button" class="est-mini" data-arch-toggle="lower" aria-pressed="false">کل فک پایین</button>
+                                    <button type="button" class="est-mini" data-clear disabled>پاک کردن انتخاب</button>
+                                </div>
+                                <div class="est-notice" data-notice hidden aria-live="polite">
+                                    <span data-notice-text></span>
+                                    <button type="button" class="est-notice__undo" data-undo>بازگردانی</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <p class="mt-3 min-h-6 text-caption font-bold font-peyda text-warm-ivory/80" data-readout aria-live="polite"></p>
-
-                    <div class="mt-2 flex flex-wrap gap-2">
-                        <button type="button" class="est-mini" data-arch-toggle="upper" aria-pressed="false">کل فک بالا</button>
-                        <button type="button" class="est-mini" data-arch-toggle="lower" aria-pressed="false">کل فک پایین</button>
-                        <button type="button" class="est-mini" data-clear disabled>پاک کردن انتخاب</button>
-                    </div>
-
-                    <!-- Mode-change notice with undo: nothing is ever dropped silently -->
-                    <div class="est-notice" data-notice hidden aria-live="polite">
-                        <span data-notice-text></span>
-                        <button type="button" class="est-notice__undo" data-undo>بازگردانی</button>
                     </div>
                 </div>
 
-                <!-- ============ C · Summary, price request & consultation ============ -->
-                <div class="lg:col-span-7">
-                    <div class="border-t border-warm-ivory/15 pt-8">
+                <!-- ============ C · Summary + CTA (بدون تغییر) ============ -->
+                <div class="border-t border-warm-ivory/15 pt-8">
 
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-                            <div>
-                                <p class="text-caption font-peyda text-warm-ivory/70">انتخاب شما</p>
-                                <p class="mt-1 text-h4 font-bold font-peyda" aria-live="polite">
-                                    <span data-sum-treatment>کامپوزیت</span>
-                                    <span class="mx-2 text-champagne-gold" aria-hidden="true">·</span>
-                                    <span data-sum-count>تعداد مشخص نشده</span>
-                                </p>
-                                <p class="mt-1 text-caption font-peyda text-warm-ivory/70" data-sum-mode></p>
-                            </div>
-
-                            <button type="button" class="btn btn-primary w-full sm:w-auto" data-reveal-btn aria-controls="est-lead" aria-disabled="true">
-                                برای مشاهده قیمت
-                                <svg class="w-5 h-5 ms-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"></path>
-                                </svg>
-                            </button>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                        <div>
+                            <p class="text-caption font-peyda text-warm-ivory/70">انتخاب شما</p>
+                            <p class="mt-1 text-h4 font-bold font-peyda" aria-live="polite">
+                                <span data-sum-treatment>کامپوزیت</span>
+                                <span class="mx-2 text-champagne-gold" aria-hidden="true">·</span>
+                                <span data-sum-count>تعداد مشخص نشده</span>
+                            </p>
+                            <p class="mt-1 text-caption font-peyda text-warm-ivory/70" data-sum-mode></p>
                         </div>
 
-                        <p class="mt-4 min-h-6 text-caption font-bold font-peyda text-champagne-gold" data-hint aria-live="polite"></p>
+                        <button type="button" class="btn btn-primary w-full sm:w-auto" data-reveal-btn aria-controls="est-lead" aria-disabled="true">
+                            برای مشاهده قیمت
+                            <svg class="w-5 h-5 ms-2 rtl:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"></path>
+                            </svg>
+                        </button>
+                    </div>
 
-                        <!-- Revealed step: grid-rows 0fr→1fr, so the page never jumps -->
-                        <div id="est-lead" class="est-reveal mt-4" data-lead inert>
-                            <div class="est-reveal__inner p-1 -m-1">
-                                <div class="rounded-brand-lg bg-warm-ivory text-deep-emerald p-6 sm:p-8 shadow-xl">
+                    <p class="mt-4 min-h-6 text-caption font-bold font-peyda text-champagne-gold" data-hint aria-live="polite"></p>
 
-                                    <div data-lead-form>
-                                        <p class="text-body font-peyda font-medium leading-loose">
-                                            با توجه به تنوع برندها و مواد مورد استفاده، قیمت نهایی درمان متفاوت است. برای دریافت قیمت دقیق و متناسب با نیازتان، لطفاً شماره تماس خود را وارد کنید. مشاوران ما در اولین فرصت با شما ارتباط خواهند گرفت.
-                                        </p>
+                    <!-- Revealed step: grid-rows 0fr→1fr, so the page never jumps -->
+                    <div id="est-lead" class="est-reveal mt-4" data-lead inert>
+                        <div class="est-reveal__inner p-1 -m-1">
+                            <div class="rounded-brand-lg bg-warm-ivory text-deep-emerald p-6 sm:p-8 shadow-xl">
 
-                                        <div class="mt-6">
-                                            <label for="est-phone" class="block mb-2 text-caption font-bold font-peyda">شماره موبایل</label>
-                                            <div class="relative">
-                                                <input
-                                                    id="est-phone"
-                                                    name="phone"
-                                                    type="tel"
-                                                    inputmode="numeric"
-                                                    autocomplete="tel"
-                                                    dir="rtl"
-                                                    maxlength="14"
-                                                    placeholder="۰۹۱۲۱۲۳۴۵۶۷"
-                                                    class="est-field est-field--light"
-                                                    data-phone
-                                                    aria-describedby="est-phone-msg"
-                                                    required>
-                                                <span class="est-valid" aria-hidden="true">
-                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
-                                                    </svg>
-                                                </span>
-                                            </div>
-                                            <p id="est-phone-msg" class="est-msg" data-phone-msg aria-live="polite"></p>
-                                        </div>
+                                <div data-lead-form>
+                                    <p class="text-body font-peyda font-medium leading-loose">
+                                        با توجه به تنوع برندها و مواد مورد استفاده، قیمت نهایی درمان متفاوت است. برای دریافت قیمت دقیق و متناسب با نیازتان، لطفاً شماره تماس خود را وارد کنید. مشاوران ما در اولین فرصت با شما ارتباط خواهند گرفت.
+                                    </p>
 
-                                        <!-- Explicit consent: the phone number is not transmitted until this is ticked -->
-                                        <div class="mt-5">
-                                            <label class="est-consent">
-                                                <input type="checkbox" name="consent" value="1" data-consent aria-describedby="est-consent-msg">
-                                                <span>با ذخیره اطلاعات من برای پیگیری مشاوره و اطلاع‌رسانی به تیم مشاوره از طریق تلگرام موافقم.</span>
-                                            </label>
-                                            <p id="est-consent-msg" class="est-msg" data-consent-msg aria-live="polite"></p>
-                                        </div>
-
-                                        <!-- Honeypot: humans never see or fill this -->
-                                        <div class="sr-only" aria-hidden="true">
-                                            <label>وب‌سایت <input type="text" name="website" tabindex="-1" autocomplete="off" data-honeypot></label>
-                                        </div>
-
-                                        <p class="est-msg est-msg--block" data-error role="alert" hidden></p>
-
-                                        <button type="submit" class="btn btn-dark w-full sm:w-auto mt-2" data-submit>
-                                            <span data-submit-label>ارتباط با مشاور</span>
-                                            <span class="hidden items-center gap-3" data-submit-loading>
-                                                <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                                    <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-                                                </svg>
-                                                در حال ارسال…
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                    <!-- Success: only ever shown after the server confirmed the save -->
-                                    <div data-lead-success hidden class="text-center sm:text-start">
-                                        <div class="flex flex-col sm:flex-row items-center gap-5">
-                                            <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-deep-emerald text-champagne-gold shrink-0" aria-hidden="true">
-                                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path class="est-check" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                                    <div class="mt-6">
+                                        <label for="est-phone" class="block mb-2 text-caption font-bold font-peyda">شماره موبایل</label>
+                                        <div class="relative">
+                                            <input
+                                                id="est-phone"
+                                                name="phone"
+                                                type="tel"
+                                                inputmode="numeric"
+                                                autocomplete="tel"
+                                                dir="rtl"
+                                                maxlength="14"
+                                                placeholder="۰۹۱۲۱۲۳۴۵۶۷"
+                                                class="est-field est-field--light"
+                                                data-phone
+                                                aria-describedby="est-phone-msg"
+                                                required>
+                                            <span class="est-valid" aria-hidden="true">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
                                                 </svg>
                                             </span>
-                                            <div>
-                                                <h3 class="text-h4 font-bold font-peyda" tabindex="-1" data-success-title>درخواست شما با موفقیت ثبت شد</h3>
-                                                <p class="mt-2 text-body font-peyda leading-relaxed text-deep-emerald/80">مشاوران ما در اولین فرصت با شما تماس خواهند گرفت.</p>
-                                            </div>
                                         </div>
-                                        <dl class="mt-6 pt-6 border-t border-soft-stone grid grid-cols-1 sm:grid-cols-3 gap-4 text-start">
-                                            <div>
-                                                <dt class="text-caption font-peyda text-charcoal/60">درمان</dt>
-                                                <dd class="font-bold font-peyda" data-done-treatment></dd>
-                                            </div>
-                                            <div>
-                                                <dt class="text-caption font-peyda text-charcoal/60">تعداد دندان</dt>
-                                                <dd class="font-bold font-peyda" data-done-count></dd>
-                                            </div>
-                                            <div>
-                                                <dt class="text-caption font-peyda text-charcoal/60">شماره تماس</dt>
-                                                <dd class="font-bold font-peyda" data-done-phone></dd>
-                                            </div>
-                                        </dl>
-                                        <button type="button" class="mt-6 text-caption font-bold font-peyda underline underline-offset-4 hover:text-forest-noir" data-restart>ثبت درخواست جدید</button>
+                                        <p id="est-phone-msg" class="est-msg" data-phone-msg aria-live="polite"></p>
                                     </div>
 
+                                    <!-- Explicit consent: the phone number is not transmitted until this is ticked -->
+                                    <div class="mt-5">
+                                        <label class="est-consent">
+                                            <input type="checkbox" name="consent" value="1" data-consent aria-describedby="est-consent-msg">
+                                            <span>با ذخیره اطلاعات من برای پیگیری مشاوره و اطلاع‌رسانی به تیم مشاوره از طریق تلگرام موافقم.</span>
+                                        </label>
+                                        <p id="est-consent-msg" class="est-msg" data-consent-msg aria-live="polite"></p>
+                                    </div>
+
+                                    <!-- Honeypot: humans never see or fill this -->
+                                    <div class="sr-only" aria-hidden="true">
+                                        <label>وب‌سایت <input type="text" name="website" tabindex="-1" autocomplete="off" data-honeypot></label>
+                                    </div>
+
+                                    <p class="est-msg est-msg--block" data-error role="alert" hidden></p>
+
+                                    <button type="submit" class="btn btn-dark w-full sm:w-auto mt-2" data-submit>
+                                        <span data-submit-label>ارتباط با مشاور</span>
+                                        <span class="hidden items-center gap-3" data-submit-loading>
+                                            <svg class="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                <path class="opacity-90" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                                            </svg>
+                                            در حال ارسال…
+                                        </span>
+                                    </button>
                                 </div>
+
+                                <!-- Success: only ever shown after the server confirmed the save -->
+                                <div data-lead-success hidden class="text-center sm:text-start">
+                                    <div class="flex flex-col sm:flex-row items-center gap-5">
+                                        <span class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-deep-emerald text-champagne-gold shrink-0" aria-hidden="true">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path class="est-check" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </span>
+                                        <div>
+                                            <h3 class="text-h4 font-bold font-peyda" tabindex="-1" data-success-title>درخواست شما با موفقیت ثبت شد</h3>
+                                            <p class="mt-2 text-body font-peyda leading-relaxed text-deep-emerald/80">مشاوران ما در اولین فرصت با شما تماس خواهند گرفت.</p>
+                                        </div>
+                                    </div>
+                                    <dl class="mt-6 pt-6 border-t border-soft-stone grid grid-cols-1 sm:grid-cols-3 gap-4 text-start">
+                                        <div>
+                                            <dt class="text-caption font-peyda text-charcoal/60">درمان</dt>
+                                            <dd class="font-bold font-peyda" data-done-treatment></dd>
+                                        </div>
+                                        <div>
+                                            <dt class="text-caption font-peyda text-charcoal/60">تعداد دندان</dt>
+                                            <dd class="font-bold font-peyda" data-done-count></dd>
+                                        </div>
+                                        <div>
+                                            <dt class="text-caption font-peyda text-charcoal/60">شماره تماس</dt>
+                                            <dd class="font-bold font-peyda" data-done-phone></dd>
+                                        </div>
+                                    </dl>
+                                    <button type="button" class="mt-6 text-caption font-bold font-peyda underline underline-offset-4 hover:text-forest-noir" data-restart>ثبت درخواست جدید</button>
+                                </div>
+
                             </div>
                         </div>
 
