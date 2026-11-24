@@ -240,7 +240,7 @@ function sarv_customize_hero_settings(WP_Customize_Manager $wp_customize): void
     foreach ($stats as $index => $label) {
         // فیلد عدد
         $wp_customize->add_setting("sarv_stat_{$index}_number", array(
-            'default'           => '+۳۵۰',
+            'default'           => '+350',
             'sanitize_callback' => 'sanitize_text_field',
         ));
         $wp_customize->add_control("sarv_stat_{$index}_number", array(

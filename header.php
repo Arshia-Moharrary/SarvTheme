@@ -9,6 +9,9 @@
 if (! defined('ABSPATH')) {
     exit;
 }
+
+$phone      = get_theme_mod('sarv_phone_number', '۰۲۱-۱۲۳۴۵۶۷۸');
+$phone_clean = preg_replace('/[^0-9+]/', '', $phone);
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -40,7 +43,6 @@ if (! defined('ABSPATH')) {
                         <!-- سمت راست (شروع در RTL): تلفن + ساعات کاری -->
                         <div class="flex items-center gap-5">
                             <?php
-                            $phone = get_theme_mod('sarv_phone_number', '۰۲۱-۱۲۳۴۵۶۷۸');
                             if (! empty($phone)) :
                             ?>
                                 <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/', '', $phone)); ?>" class="inline-flex items-center gap-2 hover:text-champagne-gold transition-colors duration-300">
@@ -182,7 +184,6 @@ if (! defined('ABSPATH')) {
 
                         <!-- شماره تماس در موبایل -->
                         <?php
-                        $phone = get_theme_mod('sarv_phone_number', '۰۲۱-۱۲۳۴۵۶۷۸');
                         if (! empty($phone)) :
                         ?>
                             <div class="flex items-center justify-center text-body font-peyda text-deep-emerald bg-soft-stone/30 py-3 rounded-brand">
@@ -201,8 +202,8 @@ if (! defined('ABSPATH')) {
                             <a href="<?php echo esc_url(wp_registration_url()); ?>" class="text-deep-emerald hover:text-champagne-gold transition-colors">ثبت‌نام</a>
                         </div>
 
-                        <a href="#" class="bg-deep-emerald text-warm-ivory text-center px-6 py-3 rounded-brand text-body font-bold hover:bg-forest-noir transition-colors duration-300 shadow-md w-full">
-                            رزرو نوبت
+                        <a href="tel:<?php echo esc_attr($phone_clean); ?>" class="bg-deep-emerald text-warm-ivory text-center px-6 py-3 rounded-brand text-body font-bold hover:bg-forest-noir transition-colors duration-300 shadow-md w-full">
+                            مشاوره رایگان
                         </a>
                     </div>
                 </div>
