@@ -26,72 +26,204 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (menuToggle && mobileMenu && mobileMenuPanel && mobileMenuClose && mobileMenuOverlay) {
 
+        const mmNav = mobileMenuPanel.querySelector('.mm-nav');
+        const desktopQuery = window.matchMedia('(min-width: 1024px)');
+        let hideTimer = null;
+
+        // ---------- ۱) حالت فعال (اگر وردپرس کلاس current-* نداده باشد) ----------
+        const normalizePath = (p) => p.replace(/\/+$/, '') || '/';
+
+        const markCurrentFallback = () => {
+            if (!mmNav) return;
+            const hasCurrent = mmNav.querySelector(
+                '.current-menu-item, .current_page_item, .current-menu-ancestor, [aria-current="page"]'
+            );
+            if (hasCurrent) return;
+
+            mmNav.querySelectorAll('a[href]').forEach((a) => {
+                const raw = a.getAttribute('href');
+                if (!raw || raw === '#') return;
+                try {
+                    const url = new URL(a.href, window.location.href);
+                    if (url.origin === window.location.origin &&
+                        !url.hash &&
+                        normalizePath(url.pathname) === normalizePath(window.location.pathname)) {
+                        a.setAttribute('aria-current', 'page');
+                        let li = a.closest('li');
+                        if (li) li.classList.add('current-menu-item');
+                        // والدها را هم «ancestor» کن تا باز شوند
+                        while (li && (li = li.parentElement && li.parentElement.closest('li'))) {
+                            li.classList.add('current-menu-ancestor');
+                        }
+                    }
+                } catch (e) { /* href نامعتبر: نادیده بگیر */ }
+            });
+        };
+
+        // ---------- ۲) آکاردئون زیرمنوها (هر تعداد سطح) ----------
+        const chevron =
+            '<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">' +
+            '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>';
+
+        const setExpanded = (btn, collapse, open, title) => {
+            btn.setAttribute('aria-expanded', String(open));
+            btn.setAttribute('aria-label', (open ? 'بستن زیرمنوی ' : 'باز کردن زیرمنوی ') + title);
+            collapse.classList.toggle('is-open', open);
+        };
+
+        const buildAccordion = () => {
+            if (!mmNav) return;
+
+            // ایندکس انیمیشن ورود برای آیتم‌های سطح اول
+            mmNav.querySelectorAll(':scope > ul > li').forEach((li, i) => li.style.setProperty('--i', i));
+
+            mmNav.querySelectorAll('li.menu-item-has-children').forEach((li, i) => {
+                const link = li.querySelector(':scope > a');
+                const sub = li.querySelector(':scope > ul');
+                if (!link || !sub) return;
+
+                const title = link.textContent.trim();
+                const id = 'mm-sub-' + i;
+
+                // ul.sub-menu را داخل یک wrapper قرار بده (برای انیمیشن ارتفاع)
+                const collapse = document.createElement('div');
+                collapse.className = 'mm-collapse';
+                collapse.id = id;
+                li.insertBefore(collapse, sub);
+                collapse.appendChild(sub);
+
+                // دکمه‌ی باز/بسته (لینک والد همچنان قابل کلیک و ناوبری است)
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'mm-toggle';
+                btn.setAttribute('aria-controls', id);
+                btn.innerHTML = chevron;
+                link.after(btn);
+
+                // مسیر صفحه‌ی جاری باز شروع می‌شود
+                const open = li.matches('.current-menu-ancestor, .current-menu-parent') ||
+                    !!sub.querySelector('.current-menu-item, .current_page_item, [aria-current="page"]');
+                setExpanded(btn, collapse, open, title);
+
+                const toggle = () => {
+                    const willOpen = btn.getAttribute('aria-expanded') !== 'true';
+
+                    // هم‌سطح‌ها بسته شوند تا منو شلوغ نشود
+                    if (willOpen && li.parentElement) {
+                        li.parentElement.querySelectorAll(':scope > li.menu-item-has-children').forEach((other) => {
+                            if (other === li) return;
+                            const ob = other.querySelector(':scope > .mm-toggle');
+                            const oc = other.querySelector(':scope > .mm-collapse');
+                            const ol = other.querySelector(':scope > a');
+                            if (ob && oc && ol) setExpanded(ob, oc, false, ol.textContent.trim());
+                        });
+                    }
+                    setExpanded(btn, collapse, willOpen, title);
+                };
+
+                btn.addEventListener('click', toggle);
+
+                // اگر لینک والد فقط "#" است، کلیک روی خود عنوان هم زیرمنو را باز می‌کند
+                const href = link.getAttribute('href');
+                if (!href || href === '#') {
+                    link.addEventListener('click', (e) => { e.preventDefault(); toggle(); });
+                }
+            });
+        };
+
+        markCurrentFallback();
+        buildAccordion();
+
+        // ---------- ۳) باز و بسته کردن ----------
+        const focusableSelector = 'a[href], button:not([disabled])';
+
+        const getFocusable = () =>
+            Array.from(mobileMenuPanel.querySelectorAll(focusableSelector))
+                .filter((el) => !el.closest('.mm-collapse:not(.is-open)'));
+
         const openMenu = () => {
+            window.clearTimeout(hideTimer);
+
             // ۱. خارج کردن کانتینر از حالت display: none
             mobileMenu.classList.remove('hidden');
             mobileMenu.setAttribute('aria-hidden', 'false');
 
-            // ۲. استفاده از requestAnimationFrame برای اعمال کلاس‌های انیمیشن در فریم بعدی
-            // این کار تضمین می‌کند که مرورگر حالت اولیه (translate-x-full) را ثبت کرده باشد
+            // ۲. اعمال کلاس‌های انیمیشن در فریم بعدی
             requestAnimationFrame(() => {
-                // نمایش overlay
+                mobileMenu.classList.add('mm-open');
                 mobileMenuOverlay.classList.remove('opacity-0', 'pointer-events-none');
-
-                // اسلاید پنل به داخل صفحه
                 mobileMenuPanel.classList.remove('translate-x-full');
                 mobileMenuPanel.classList.add('translate-x-0');
             });
 
-            // تنظیمات دسترسی‌پذیری
             menuToggle.setAttribute('aria-expanded', 'true');
-
-            // جلوگیری از اسکرول صفحه
             document.body.style.overflow = 'hidden';
 
-            // فوکوس روی اولین لینک داخل منو (با تاخیر برای هماهنگی با انیمیشن)
-            setTimeout(() => {
-                const firstFocusable = mobileMenuPanel.querySelector('a, button');
-                if (firstFocusable) firstFocusable.focus();
-            }, 300);
+            // فوکوس روی دکمه‌ی بستن (با تاخیر برای هماهنگی با انیمیشن)
+            setTimeout(() => mobileMenuClose.focus(), 300);
         };
 
-        const closeMenu = () => {
-            // انیمیشن اسلاید به سمت راست
+        const closeMenu = (returnFocus = true) => {
+            mobileMenu.classList.remove('mm-open');
             mobileMenuPanel.classList.remove('translate-x-0');
             mobileMenuPanel.classList.add('translate-x-full');
-
-            // محو شدن overlay
             mobileMenuOverlay.classList.add('opacity-0', 'pointer-events-none');
 
-            // تنظیمات دسترسی‌پذیری
             menuToggle.setAttribute('aria-expanded', 'false');
             mobileMenu.setAttribute('aria-hidden', 'true');
-
-            // بازگرداندن اسکرول صفحه
             document.body.style.overflow = '';
 
-            // بازگرداندن فوکوس به دکمه همبرگری
-            menuToggle.focus();
+            if (returnFocus) menuToggle.focus();
 
-            // مخفی کردن کل کانتینر بعد از اتمام انیمیشن
-            setTimeout(() => {
-                mobileMenu.classList.add('hidden');
-            }, 300);
+            window.clearTimeout(hideTimer);
+            hideTimer = window.setTimeout(() => mobileMenu.classList.add('hidden'), 300);
         };
 
-        // رویدادهای باز کردن
+        const isOpen = () => !mobileMenu.classList.contains('hidden');
+
         menuToggle.addEventListener('click', openMenu);
+        mobileMenuClose.addEventListener('click', () => closeMenu());
+        mobileMenuOverlay.addEventListener('click', () => closeMenu());
 
-        // رویدادهای بستن
-        mobileMenuClose.addEventListener('click', closeMenu);
-        mobileMenuOverlay.addEventListener('click', closeMenu);
+        // لینک‌های هش (اسکرول در همان صفحه) منو را ببندند
+        mobileMenuPanel.addEventListener('click', (e) => {
+            const a = e.target.closest('a[href^="#"]');
+            if (a && a.getAttribute('href') !== '#') closeMenu(false);
+        });
 
-        // بستن با کلید Escape (دسترسی‌پذیری)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+            if (!isOpen()) return;
+
+            if (e.key === 'Escape') {
                 closeMenu();
+                return;
+            }
+
+            // تله‌ی فوکوس داخل پنل
+            if (e.key === 'Tab') {
+                const items = getFocusable();
+                if (!items.length) return;
+                const first = items[0];
+                const last = items[items.length - 1];
+                if (e.shiftKey && document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                } else if (!e.shiftKey && document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                }
             }
         });
+
+        // اگر کاربر صفحه را به سایز دسکتاپ برد (مثلاً چرخش تبلت)، منو بسته شود
+        const onBreakpointChange = (e) => {
+            if (e.matches && isOpen()) closeMenu(false);
+        };
+        if (desktopQuery.addEventListener) {
+            desktopQuery.addEventListener('change', onBreakpointChange);
+        } else if (desktopQuery.addListener) {
+            desktopQuery.addListener(onBreakpointChange);
+        }
     }
 
     // ==========================================

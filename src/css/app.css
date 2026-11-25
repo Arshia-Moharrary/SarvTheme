@@ -2068,3 +2068,419 @@ button:focus-visible {
     font-weight: 700;
     text-align: center;
 }
+
+/* ----- Panel header ----- */
+.mm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-soft-stone) 70%, transparent);
+}
+
+.mm-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    text-decoration: none;
+}
+
+.mm-brand__logo {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    padding: 2px;
+    border-radius: 9999px;
+    background: #fff;
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-champagne-gold) 50%, transparent);
+    overflow: hidden;
+}
+
+.mm-brand__logo img {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    object-fit: cover;
+}
+
+.mm-brand__name {
+    font-family: var(--font-peyda);
+    font-size: var(--text-h4);
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--color-deep-emerald);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mm-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    border: 1px solid var(--color-soft-stone);
+    color: var(--color-deep-emerald);
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.mm-close:hover {
+    background: var(--color-champagne-gold);
+    border-color: var(--color-champagne-gold);
+    color: var(--color-warm-ivory);
+    transform: rotate(90deg);
+}
+
+/* ----- Nav ----- */
+.mm-nav {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 1rem 0.875rem 1.25rem;
+}
+
+.mm-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mm-nav li {
+    list-style: none;
+    margin: 0;
+}
+
+.mm-nav>ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* Row: link (+ optional toggle button) */
+.mm-nav li.menu-item-has-children {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+}
+
+.mm-nav li.menu-item-has-children>.mm-collapse {
+    grid-column: 1 / -1;
+}
+
+/* Links — inactive: neutral charcoal (NOT green), active: emerald on a soft gold wash */
+.mm-nav a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 3.25rem;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-brand);
+    font-family: var(--font-peyda);
+    font-size: var(--text-body);
+    font-weight: 700;
+    color: var(--color-charcoal);
+    text-decoration: none;
+    transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Marker: a quiet dot, grows into a gold bar when the page is active */
+.mm-nav a::before {
+    content: '';
+    flex-shrink: 0;
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 9999px;
+    background: var(--color-soft-stone);
+    transition: height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease;
+}
+
+.mm-nav a:hover,
+.mm-nav a:focus-visible {
+    background: color-mix(in srgb, var(--color-deep-emerald) 6%, transparent);
+    color: var(--color-deep-emerald);
+}
+
+.mm-nav a:hover::before,
+.mm-nav a:focus-visible::before {
+    background: var(--color-champagne-gold);
+}
+
+/* Active page */
+.mm-nav li.current-menu-item>a,
+.mm-nav li.current_page_item>a,
+.mm-nav a[aria-current='page'] {
+    background: color-mix(in srgb, var(--color-champagne-gold) 14%, transparent);
+    color: var(--color-deep-emerald);
+    font-weight: 900;
+}
+
+.mm-nav li.current-menu-item>a::before,
+.mm-nav li.current_page_item>a::before,
+.mm-nav a[aria-current='page']::before {
+    height: 1.25rem;
+    background: var(--color-champagne-gold);
+}
+
+/* Parent of the active page: highlighted lightly so the visitor sees where they are */
+.mm-nav li.current-menu-ancestor>a,
+.mm-nav li.current-menu-parent>a {
+    color: var(--color-deep-emerald);
+    font-weight: 800;
+}
+
+.mm-nav li.current-menu-ancestor>a::before,
+.mm-nav li.current-menu-parent>a::before {
+    background: var(--color-champagne-gold);
+}
+
+/* ----- Accordion toggle (added by JS) ----- */
+.mm-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin-inline-start: 0.25rem;
+    border-radius: 9999px;
+    border: 1px solid var(--color-soft-stone);
+    background: #fff;
+    color: var(--color-deep-emerald);
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+}
+
+.mm-toggle svg {
+    width: 1.125rem;
+    height: 1.125rem;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mm-toggle[aria-expanded='true'] {
+    background: var(--color-deep-emerald);
+    border-color: var(--color-deep-emerald);
+    color: var(--color-champagne-gold);
+}
+
+.mm-toggle[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+}
+
+/* Collapsible sub-menu: animates 0fr → 1fr (no height measuring) */
+.mm-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;                       /* closed items leave the tab order */
+    transition: grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.38s;
+}
+
+.mm-collapse.is-open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+}
+
+.mm-collapse>ul {
+    min-height: 0;
+    overflow: hidden;
+    margin-inline-start: 1.5rem;
+    padding-inline-start: 0.5rem;
+    border-inline-start: 2px solid color-mix(in srgb, var(--color-champagne-gold) 45%, transparent);
+}
+
+/* Sub-levels: smaller, lighter, same active logic */
+.mm-collapse a {
+    min-height: 2.875rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--color-charcoal) 85%, transparent);
+}
+
+.mm-collapse a::before {
+    width: 0.3125rem;
+    height: 0.3125rem;
+}
+
+.mm-collapse li.current-menu-item>a::before,
+.mm-collapse li.current_page_item>a::before,
+.mm-collapse a[aria-current='page']::before {
+    height: 1rem;
+}
+
+.mm-collapse .mm-collapse>ul {
+    margin-inline-start: 1rem;
+}
+
+/* Gentle staggered entrance of the first level when the menu opens */
+.mm-open .mm-nav>ul>li {
+    animation: mm-item-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 45ms + 120ms);
+}
+
+@keyframes mm-item-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.625rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ----- Footer ----- */
+.mm-foot {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    padding: 1rem 1.25rem 1.25rem;
+    border-top: 1px solid color-mix(in srgb, var(--color-soft-stone) 70%, transparent);
+    background: color-mix(in srgb, var(--color-soft-stone) 18%, transparent);
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+}
+
+.mm-phone {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem 0.875rem;
+    border-radius: var(--radius-brand);
+    background: #fff;
+    border: 1px solid color-mix(in srgb, var(--color-soft-stone) 80%, transparent);
+    text-decoration: none;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mm-phone:hover {
+    border-color: var(--color-champagne-gold);
+    box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--color-forest-noir) 25%, transparent);
+}
+
+.mm-phone__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background: var(--color-deep-emerald);
+    color: var(--color-champagne-gold);
+}
+
+.mm-phone__text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.mm-phone__label {
+    font-family: var(--font-peyda);
+    font-size: var(--text-caption);
+    color: color-mix(in srgb, var(--color-charcoal) 65%, transparent);
+}
+
+.mm-phone__number {
+    font-family: var(--font-peyda);
+    font-weight: 800;
+    color: var(--color-deep-emerald);
+    text-align: start;
+}
+
+.mm-auth {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.625rem;
+}
+
+.mm-auth__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.75rem;
+    border-radius: var(--radius-brand);
+    border: 1px solid var(--color-soft-stone);
+    background: transparent;
+    font-family: var(--font-peyda);
+    font-size: var(--text-caption);
+    font-weight: 700;
+    color: var(--color-deep-emerald);
+    text-decoration: none;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.mm-auth__link:hover {
+    background: #fff;
+    border-color: var(--color-champagne-gold);
+}
+
+/* Same language as the desktop CTA: emerald pill with a gold circle */
+.mm-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.375rem;
+    padding-inline-start: 1.25rem;
+    min-height: 3.25rem;
+    border-radius: var(--radius-brand);
+    background: var(--color-deep-emerald);
+    color: var(--color-warm-ivory);
+    font-family: var(--font-peyda);
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 10px 24px -12px color-mix(in srgb, var(--color-forest-noir) 55%, transparent);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.mm-cta:hover {
+    background: var(--color-forest-noir);
+    transform: translateY(-1px);
+}
+
+.mm-cta__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background: var(--color-champagne-gold);
+    color: var(--color-deep-emerald);
+    transition: transform 0.3s ease;
+}
+
+.mm-cta:hover .mm-cta__icon {
+    transform: scale(1.08);
+}
+
+/* Visible keyboard focus */
+.mm-panel a:focus-visible,
+.mm-panel button:focus-visible {
+    outline: 2px solid var(--color-champagne-gold);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .mm-open .mm-nav>ul>li {
+        animation: none !important;
+    }
+
+    .mm-collapse,
+    .mm-toggle svg,
+    .mm-close,
+    .mm-nav a,
+    .mm-nav a::before,
+    .mm-cta,
+    .mm-cta__icon {
+        transition: none !important;
+    }
+}

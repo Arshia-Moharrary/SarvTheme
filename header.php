@@ -143,69 +143,74 @@ $phone_clean = preg_replace('/[^0-9+]/', '', $phone);
         </header>
 
         <!-- ================================================================ -->
-        <!-- منوی موبایل — کاملاً بدون تغییر (به‌عنوان کامپوننت تأییدشده) -->
+        <!-- منوی موبایل (بازطراحی‌شده: حالت فعال، زیرمنوی آکاردئونی، ظاهر جدید) -->
         <!-- ================================================================ -->
         <div id="mobile-menu" class="fixed inset-0 z-[60] hidden lg:hidden" aria-hidden="true">
 
             <!-- پس‌زمینه تاریک (Overlay) -->
             <div id="mobile-menu-overlay" class="absolute inset-0 bg-charcoal/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none"></div>
 
-            <!-- پنل منو (از سمت راست باز می‌شود) -->
-            <div id="mobile-menu-panel" class="absolute top-0 start-0 h-full w-[80%] max-w-sm bg-warm-ivory shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+            <!-- پنل منو -->
+            <div id="mobile-menu-panel" class="mm-panel absolute top-0 start-0 h-full w-[88%] max-w-sm bg-warm-ivory shadow-2xl rounded-e-brand-lg transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col" role="dialog" aria-modal="true" aria-label="منوی اصلی">
 
-                <!-- هدر پنل موبایل -->
-                <div class="flex items-center justify-between p-6 border-b border-soft-stone">
-                    <span class="font-black text-h3 text-deep-emerald">کلینیک سرو</span>
-                    <button id="mobile-menu-close" class="text-charcoal hover:text-champagne-gold p-2 transition-colors" aria-label="بستن منو">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <!-- سربرگ پنل: لوگو + نام + بستن -->
+                <div class="mm-head">
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="mm-brand" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                        <span class="mm-brand__logo">
+                            <img src="<?php echo esc_url(get_template_directory_uri() . '/src/images/logo/logo3.jpg'); ?>" alt="" width="44" height="44">
+                        </span>
+                        <span class="mm-brand__name">کلینیک سرو</span>
+                    </a>
+                    <button id="mobile-menu-close" type="button" class="mm-close" aria-label="بستن منو">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                         </svg>
                     </button>
                 </div>
 
-                <!-- محتوای پنل موبایل -->
-                <div class="flex-grow overflow-y-auto p-6 flex flex-col gap-8">
+                <!-- ناوبری -->
+                <nav class="mm-nav" aria-label="منوی موبایل">
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'primary',
+                        'container'      => false,
+                        'menu_class'     => 'mobile-nav-menu',
+                        'fallback_cb'    => 'sarv_nav_fallback_mobile',
+                        'depth'          => 3,
+                    ));
+                    ?>
+                </nav>
 
-                    <!-- منوی ناوبری موبایل -->
-                    <nav class="font-peyda text-body font-medium text-deep-emerald">
-                        <?php
-                        wp_nav_menu(array(
-                            'theme_location' => 'primary',
-                            'container'      => false,
-                            'menu_class'     => 'flex flex-col gap-4',
-                            'fallback_cb'    => 'sarv_nav_fallback_mobile',
-                            'depth'          => 2,
-                        ));
-                        ?>
-                    </nav>
+                <!-- پایین پنل: تماس، ورود/ثبت‌نام، CTA -->
+                <div class="mm-foot">
 
-                    <!-- دکمه‌ها و شماره تماس در موبایل -->
-                    <div class="mt-auto pt-6 border-t border-soft-stone flex flex-col gap-6">
-
-                        <!-- شماره تماس در موبایل -->
-                        <?php
-                        if (! empty($phone)) :
-                        ?>
-                            <div class="flex items-center justify-center text-body font-peyda text-deep-emerald bg-soft-stone/30 py-3 rounded-brand">
-                                <svg class="w-5 h-5 me-2 text-champagne-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <?php if (! empty($phone)) : ?>
+                        <a href="tel:<?php echo esc_attr($phone_clean); ?>" class="mm-phone">
+                            <span class="mm-phone__icon" aria-hidden="true">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                 </svg>
-                                <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/', '', $phone)); ?>" class="hover:text-champagne-gold transition-colors duration-300 font-bold" dir="ltr">
-                                    <?php echo esc_html($phone); ?>
-                                </a>
-                            </div>
-                        <?php endif; ?>
-
-                        <div class="flex items-center justify-between text-caption font-peyda">
-                            <a href="<?php echo esc_url(wp_login_url()); ?>" class="text-deep-emerald hover:text-champagne-gold transition-colors">ورود</a>
-                            <span class="text-soft-stone">|</span>
-                            <a href="<?php echo esc_url(wp_registration_url()); ?>" class="text-deep-emerald hover:text-champagne-gold transition-colors">ثبت‌نام</a>
-                        </div>
-
-                        <a href="tel:<?php echo esc_attr($phone_clean); ?>" class="bg-deep-emerald text-warm-ivory text-center px-6 py-3 rounded-brand text-body font-bold hover:bg-forest-noir transition-colors duration-300 shadow-md w-full">
-                            مشاوره رایگان
+                            </span>
+                            <span class="mm-phone__text">
+                                <span class="mm-phone__label">تماس با ما</span>
+                                <span class="mm-phone__number" dir="ltr"><?php echo esc_html($phone); ?></span>
+                            </span>
                         </a>
+                    <?php endif; ?>
+
+                    <div class="mm-auth">
+                        <a href="<?php echo esc_url(wp_login_url()); ?>" class="mm-auth__link">ورود</a>
+                        <a href="<?php echo esc_url(wp_registration_url()); ?>" class="mm-auth__link">ثبت‌نام</a>
                     </div>
+
+                    <a href="tel:<?php echo esc_attr($phone_clean); ?>" class="mm-cta">
+                        <span>مشاوره رایگان</span>
+                        <span class="mm-cta__icon" aria-hidden="true">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                            </svg>
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
