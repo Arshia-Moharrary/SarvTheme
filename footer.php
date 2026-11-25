@@ -201,7 +201,7 @@ if (! defined('ABSPATH')) {
                                     </svg>
                                 </div>
                                 <h5 class="text-deep-emerald font-bold text-body mb-1">واحد پشتیبانی</h5>
-                                <p class="text-charcoal/60 text-caption font-medium" dir="ltr">021-66547867 | 021-6653567</p>
+                                <p class="text-charcoal/60 text-caption font-medium" dir="ltr">0919 396 9731 | 0910 488 2343</p>
                             </div>
                         </div>
 
@@ -214,7 +214,7 @@ if (! defined('ABSPATH')) {
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                 </div>
-                                <h5 class="text-deep-emerald font-bold text-body mb-1">آدرس فروشگاه</h5>
+                                <h5 class="text-deep-emerald font-bold text-body mb-1">آدرس شعب</h5>
                                 <p class="text-charcoal/60 text-caption font-medium">تهران - خیابان سعادت آباد - کوچه ۵ - پلاک ۱۲</p>
                             </div>
                         </div>
@@ -228,7 +228,7 @@ if (! defined('ABSPATH')) {
                                     </svg>
                                 </div>
                                 <h5 class="text-deep-emerald font-bold text-body mb-1">ایمیل پشتیبانی</h5>
-                                <p class="text-charcoal/60 text-caption font-medium" dir="ltr">info@website.com | support@website.com</p>
+                                <p class="text-charcoal/60 text-caption font-medium" dir="ltr">sarvdental@clinic.com</p>
                             </div>
                         </div>
 
