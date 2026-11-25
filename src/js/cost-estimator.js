@@ -316,7 +316,9 @@
     var archExpander = q('[data-arch-expander]');
     var archBody = q('[data-arch-body]');
     if (archExpander && archBody) {
-        archExpander.addEventListener('click', function () {
+        archExpander.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
             var open = archExpander.getAttribute('aria-expanded') === 'true';
             archExpander.setAttribute('aria-expanded', String(!open));
             archBody.classList.toggle('is-open', !open);

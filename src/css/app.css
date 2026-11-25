@@ -1074,6 +1074,13 @@ button:focus-visible {
     }
 }
 
+.est-expander {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    cursor: pointer;
+}
+
 /* ----- Dental arch ----- */
 .est-arch {
     display: block;
@@ -1151,19 +1158,21 @@ button:focus-visible {
 
 /* ----- Step reveal: animates 0fr → 1fr, no height measuring, no layout jump ----- */
 .est-reveal {
-    display: grid;
-    grid-template-rows: 0fr;
+    display: block;
+    overflow: hidden;
+    max-height: 0;
     opacity: 0;
-    transition: grid-template-rows 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out;
+    transition: max-height 0.55s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out;
 }
 
 .est-reveal.is-open {
-    grid-template-rows: 1fr;
+    max-height: 1200px;
+    /* بزرگ‌تر از ارتفاع نقشه */
     opacity: 1;
 }
 
 .est-reveal__inner {
-    overflow: hidden;
+    overflow: visible;
     min-height: 0;
 }
 
@@ -2274,7 +2283,8 @@ button:focus-visible {
 .mm-collapse {
     display: grid;
     grid-template-rows: 0fr;
-    visibility: hidden;                       /* closed items leave the tab order */
+    visibility: hidden;
+    /* closed items leave the tab order */
     transition: grid-template-rows 0.38s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 0.38s;
 }
 
